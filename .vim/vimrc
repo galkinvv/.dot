@@ -1,0 +1,618 @@
+"Basic options
+set nocompatible  " no vi compatibility
+set tabstop=4    "Tab size
+set shiftwidth=4 "Tab size(?)
+set insertmode    " insertmode is main
+set backspace=2   " backspace over anything
+set whichwrap+=<,>,[,],h,l "cursor keys wrap over
+set autoindent	  " auto-indent new lines 
+set history=500 	" keep lines of command line history
+set ruler   	"show the cursor position all the time
+set showcmd 	"display incomplete commands
+set guioptions=egmri "no gui toolbar 
+set timeout
+set timeoutlen=20 "fast esc in terminal
+set ttimeoutlen=-1 "same timeout for mappings
+set laststatus=2
+"set ve=all "cursor after end of line 
+if version >= 700
+	set ve=onemore "cursor after end of line 
+endif
+set ch=1 "one line for cmd
+set confirm "ask for unsaved
+set hidden "do not unload hidden
+set wildmenu "comletion with menu
+set wildmode=list:longest,full "completion options
+set textwidth=0 "disable auto wrap
+set gdefault "replase all matches in line by default
+set ignorecase "ignore case in search
+set smartcase "not ignore case in search if pattern contains uppercase
+set incsearch  "do incremental searching
+set noshowmode "do not show mode at bottom
+"set scrolloff=4 "lines to keep near cursor
+set scrolloff=999 "center current line at display
+set sidescrolloff=10 "chars to keep near cursor
+set sidescroll=1 "horizontal scroll amount
+set suffixes=".~,.bak,.swp,.o,.obj" "suffixes of lower priority
+set mousemodel=extend "right click to extend, not popup
+set selectmode="key,mouse"
+"set keymodel=startsel,stopsel
+set keymodel=stopsel
+set nobackup	  " do not keep a backup file, use versions instead
+"set nowritebackup
+"set mouse=a "use mouse everywhere
+set nohlsearch "switch off highlighting the last used search pattern
+set autowriteall "autosave
+"if version >= 700
+	if has("gui_win32")
+		set guifont=ter-c28b:h14
+	elseif hostname()=="note0"
+		set guifont=monospace\ 12
+	elseif hostname()=="note2"
+		set guifont=Terminus\ Bold\ 8
+	elseif hostname()=="vasily-desktop"
+		set guifont=Terminus\ Bold\ 10
+	else
+		set guifont=Terminus\ Bold\ 16
+	endif
+"endif
+set display=uhex "unprintable as hex (need?)
+if &readonly "readonly is not modifiable
+	set nomodifiable
+endif
+if &modifiable
+	set fileformat=unix "LF 
+endif
+set wrap "wrap long lines
+set textwidth=0 "wrap only
+set showbreak=>>>> "wrapped lines start
+set showfulltag "completion
+if has("gui_win32")
+	set winaltkeys=yes "Alt+keys are hanled by Windows
+endif
+if version >= 700
+	set completeopt=menu,longest ",preview
+endif
+if $LANG=~"koi"
+	set fileencodings=ucs-bom,koi8r,default "order of guessing encodings
+else
+	set fileencodings=ucs-bom,utf-8,default,cp1251 "order of guessing encodings
+endif
+
+if &term =~ "linux" 
+	set t_Co=16 
+	" We use the blink attribute for bright background (console_codes(4)) and the 
+	" bold attribute for bright foreground. The redefinition of t_AF is necessary 
+	" for bright "Normal" highlighting to not influence the rest. 
+	set t_AB=[%?%p1%{7}%>%t5%p1%{8}%-%e25%p1%;m[4%dm 
+	set t_AF=[%?%p1%{7}%>%t1%p1%{8}%-%e22%p1%;m[3%dm 
+endif
+
+syntax enable " Switch syntax highlighting on
+
+function! SwitchToWinType(editable)
+	if a:editable
+		"normal buffer
+		set insertmode
+		set selection=exclusive
+	else
+		"constant buffer
+		"set noinsertmode
+		"set selection=inclusive
+	endif
+endfunction
+
+
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
+
+" Set options and add mapping such that Vim behaves a lot like MS-Windows
+" For Shift-Ins to work autoselect must be off.
+" On Unix we have two selections, autoselect can be used.
+if has("x11")
+	set guioptions+=aA
+endif
+
+"function! InsertCO()
+	"if pumvisible()
+"		return "\<Left>\<Right>\<C-O>"
+	"else
+	"	return "\<C-O>"
+"endfunction
+"imap <expr> <C-O> InsertCO()
+
+function! MapNormalOnly(what,for)
+	execute "nnoremap ".a:what." ".a:for
+endfunction
+function! MapVisualOnly(what,for)
+	if version >= 700
+		execute "xnoremap ".a:what." ".a:for
+	endif
+endfunction
+function! QuitCompletionmode()
+	if pumvisible()
+		return "\<Space>\<BS>"
+	elseif mode()=="i" && col(".")>1
+		return "\<Esc>a"
+	else
+		return ""
+	endif
+endfunction
+function! MapInsertOnly(what,for)
+	if version >= 700
+		execute "inoremap <expr> ".a:what." QuitCompletionmode().\'<C-O>".a:for."'"
+	else
+		execute "inoremap ".a:what." <C-O>".a:for
+	endif
+	"execute "inoremap ".a:what." <Esc>a<C-O>".a:for
+endfunction
+function! MapSelectOnly(what,for)
+	"execute "vnoremap ".a:what." ".a:for
+	if version >= 700
+		execute "snoremap ".a:what." <C-O>".a:for
+	else
+		execute "vnoremap ".a:what." ".a:for
+	endif
+endfunction
+
+if has("clipboard")
+	let g:RegisterForClipBoard="+"
+else
+	let g:RegisterForClipBoard="\""
+endif
+
+" SHIFT-Del,BS is Cut
+call MapSelectOnly("<BS>",'"'.RegisterForClipBoard.'x')
+call MapSelectOnly("<S-Del>",'"'.RegisterForClipBoard.'x')
+call MapInsertOnly("<S-Del>",'"'.RegisterForClipBoard.'dd')
+" CTRL-Insert is Copy
+call MapNormalOnly("<C-Insert>",'"'.RegisterForClipBoard.'yy')
+call MapVisualOnly("<C-Insert>",'"'.RegisterForClipBoard.'y')
+call MapInsertOnly("<C-Insert>",'"'.RegisterForClipBoard.'yy')
+call MapSelectOnly("<C-Insert>",'"'.RegisterForClipBoard.'y')
+
+" Insert is Copy or Paste, depending on mode
+call MapNormalOnly("<Insert>",'"'.RegisterForClipBoard.'yy')
+call MapVisualOnly("<Insert>",'"'.RegisterForClipBoard.'y')
+call MapInsertOnly("<Insert>",'"'.RegisterForClipBoard.'[P')
+call MapSelectOnly("<Insert>",'"'.RegisterForClipBoard.'y')
+
+"F8 is delete line
+call MapInsertOnly("<F8>",'"-dd')
+call MapInsertOnly("<S-F8>",'"-dd<Up>')
+
+"F6 dup string or block
+"function! DupIfCan()
+"	if mode()==#"S"
+"		"copy, go after block, paste
+"		"bugs...
+"		"return "\<C-O>y\<C-O>gp"
+"	endif
+"	return ""
+"endfunction
+inoremap <F6> <Esc>a<C-O>yy<C-O>p
+inoremap <S-F6> <Esc>a<C-O>yy<C-O>P
+"snoremap <expr> <F6> DupIfCan()
+
+call MapInsertOnly("<PageDown>","<C-D>")
+call MapInsertOnly("<PageUp>","<C-U>")
+
+function! MapShiftInsert()
+	execute "inoremap <S-Insert> <C-R><C-P>".g:RegisterForClipBoard
+	execute "cnoremap <S-Insert> <C-R>".g:RegisterForClipBoard
+	execute "vnoremap <S-Insert> \"-c<C-R>".g:RegisterForClipBoard
+endfunction
+
+call MapShiftInsert()
+
+function! GotoModeFromNormal(mode)
+	if a:mode==#'S' && mode()==#'V'
+		return ""
+	endif
+	if a:mode==#'s' && mode()==#'v'
+		return ""
+	endif
+	if a:mode==#'s'
+		return "v"
+	endif
+	if a:mode==#'S'
+		return "V"
+	endif
+endfunction
+function! GotoMode(mode)
+	if a:mode==#mode()
+		return QuitCompletionmode()."\<C-O>"
+	endif
+	if a:mode==#'s'
+		return QuitCompletionmode()."\<C-O>gh\<C-O>"
+	endif
+	if a:mode==#'S'
+		return QuitCompletionmode()."\<C-O>gH\<C-O>"
+	endif
+endfunction
+"function! GenerateMapInMode(modecmd,cmd)
+"	return GotoMode(a:modecmd).a:cmd
+"endfunction
+function! MapInMode(key,modecmd,cmd)
+	"execute "inoremap ".a:key." <C-R>=GenerateMapInMode(\"".a:modecmd."\",\"".a:cmd."\")\<CR>"
+ 	if version >= 700
+		execute "nnoremap \<expr> ".a:key.' GotoModeFromNormal("'.a:modecmd.'")."'.a:cmd.'"'
+		execute "vnoremap \<expr> ".a:key.' GotoModeFromNormal("'.a:modecmd.'")."'.a:cmd.'"'
+		execute "inoremap \<expr> ".a:key.' GotoMode("'.a:modecmd.'")."'.a:cmd.'"'
+		execute "snoremap \<expr> ".a:key.' GotoMode("'.a:modecmd.'")."'.a:cmd.'"'
+	else
+		execute "vnoremap ".a:key." ".a:cmd
+		if a:modecmd==#'s'
+			execute "nnoremap ".a:key." v".a:cmd
+			execute "inoremap ".a:key." \<C-O>gh\<C-O>".a:cmd
+		elseif a:modecmd==#'S'
+			execute "nnoremap ".a:key." V".a:cmd
+			execute "inoremap ".a:key." \<C-O>gH\<C-O>".a:cmd
+		endif
+	endif	
+	"execute "snoremap \<expr> ".a:key." GenerateMapInMode(\"".a:modecmd."\",\"".a:cmd."\")"
+endfunction
+
+"make C-S-<> use words instead of WORDs
+call MapInMode("<C-S-Left>","s","b")
+call MapInMode("<C-S-Right>","s","w")
+call MapInMode("<S-Left>","s","h")
+call MapInMode("<S-Right>","s","l")
+call MapInMode("<C-S-PageDown>","S","\<C-D>")
+call MapInMode("<C-S-PageUp>","S","\<C-U>")
+call MapInMode("<S-PageDown>","s","\<C-D>")
+call MapInMode("<S-PageUp>","s","\<C-U>")
+call MapInMode("<C-S-Down>","S","j")
+call MapInMode("<C-S-Up>","S","k")
+call MapInMode("<S-Down>","s","j")
+call MapInMode("<S-Up>","s","k")
+call MapInMode("<S-Home>","s","0")
+call MapInMode("<S-End>","s","$")
+call MapInsertOnly("<C-S-End>","gh<C-O>G<C-O>$")
+call MapInsertOnly("<C-S-Home>","gh<C-O>gg")
+
+"map everywhere
+function! MapEW(what,for)
+	if version >= 700
+		execute "snoremap ".a:what." <Esc>a<C-O>".a:for
+	else
+		execute "vnoremap ".a:what." <C-C><C-O>".a:for
+	endif
+	"execute "vnoremap ".a:what." <C-C><C-O>".a:for
+	execute "nnoremap ".a:what." ".a:for
+	"<C-C> in insert mode is needed when completion was invoked
+	call MapInsertOnly(a:what,a:for)
+	"execute "inoremap ".a:what." <Esc>a<C-O>".a:for 
+	execute "cnoremap ".a:what." <C-C><C-O>".a:for
+	execute "onoremap ".a:what." <C-C><C-O>".a:for
+endfunction
+
+" A-BS is Undo
+call MapEW("<A-BS>","u")
+
+" A-S-BS is Redo (although not repeat)
+call MapEW("<A-S-BS>","<C-R>")
+
+function! CtlWinNext()
+	"need to can switch to help window
+	"set buflisted
+	hide bnext
+endfunction
+       
+function! CtlWinPrev()
+	"need to can switch to help window
+        "set buflisted
+	hide bprev
+endfunction
+
+function! CtlCloseAll()
+	confirm xall
+	"quit
+endfunction
+
+function! CtlWinClose()
+	bdel
+	"quit
+endfunction
+
+function! CtlWinOpen()                     
+	let fname = input("File to edit: ", "", "file")
+	if fname!=""
+		" for directory browsing
+		" set noinsertmode
+		execute "hide edit ".fname
+	endif
+endfunction
+ 
+function! CtlWinOpenNew()
+	execute "hide new "
+endfunction
+
+function! CtlSaveAs()
+	let fname = input("Save as:", "", "file")
+	if fname!=""
+		execute "saveas ".fname
+	else
+		echo "no name was entered"
+	endif
+endfunction
+
+function! CtlBackupAs()
+	let fname = input("Backup as:", "", "file")
+	if fname!=""
+		execute "write ".fname
+	else
+		echo "no name was entered"
+	endif
+endfunction
+
+function! CtlSave()
+	if bufname("%") == ""
+		return CtlSaveAs()
+	endif
+	update
+endfunction
+
+" CTRL-Tab is Next window
+call MapEW("<C-Tab>",":call CtlWinNext()<CR>")
+" CTRL-Shift-Tab is Previous window
+call MapEW("<C-S-Tab>",":call CtlWinPrev()<CR>")
+" CTRL-F4 is Close window
+call MapEW("<C-F4>",":call CtlWinClose()<CR>")
+" Shift-F4 is Close window if no gui
+if !has("gui_running")
+	call MapEW("<S-F4>",":call CtlCloseAll()<CR>")
+endif
+" F3 is open file
+if version >= 700
+	call MapEW("<F3>",":call CtlWinOpen()<CR>")
+else
+	call MapEW("<F3>",":e ")
+endif
+" Shift-F3 is new file
+call MapEW("<S-F3>",":call CtlWinOpenNew()<CR>")
+" F2 is save
+call MapEW("<F2>",":call CtlSave()<CR>")
+call MapEW("<S-F2>",":call CtlSaveAs()<CR>")
+call MapEW("<A-F2>",":call CtlBackupAs()<CR>")
+" Alt-F4 is exit (if there is no other method to exit...)
+call MapEW("<A-F4>",":quitall<CR>")
+" F9 is make
+call MapEW("<F9>",":make<CR>")
+" F9 is make & run (assume makefile has target run)
+call MapEW("<C-F9>",":!make -s run<CR>")
+" Ctrl+F1 is context man						
+call MapEW("<C-F1>",":exec \"Man \".expand(\"<cword>\")<CR>")
+
+
+" F7 is search
+call MapEW("<F7>","/")
+" Alt-F7 is backward /search
+call MapEW("<A-F7>","?")
+" Shift-F7 is search again
+call MapEW("<S-F7>","n")
+" Alt-Shift-F7 is search again in other direction
+call MapEW("<A-S-F7>","N")
+call MapEW("<F12>","za")
+
+function! CheckSearch(cms,cmo)
+	let ct = getcmdtype()
+	if ((ct != '/') && (ct != '?')) || getcmdline()==""
+		return "\<C-C>\<C-O>".a:cmo
+	endif
+	return "\<CR>\<C-O>".a:cms
+endfunction
+function! ReMapExpr(what,for)
+	execute "cunmap ".a:what
+	execute "cnoremap \<expr> ".a:what." ".a:for
+endfunction
+" (Shift-)F7 is search
+call ReMapExpr("<F7>","CheckSearch('n','/')")
+call ReMapExpr("<S-F7>","CheckSearch('n','n')")
+" Alt-(Shift-)F7 is backward
+call ReMapExpr("<A-F7>","CheckSearch('N','?')")
+call ReMapExpr("<A-S-F7>","CheckSearch('N','N')")
+
+function! BufCreated()
+	"maximize
+	only
+	"goto last place
+        if line("'\"") > 0 && line("'\"") <= line("$")
+        	execute "normal g`\""
+        endif
+endfunction
+function! WinLeaved()
+	"save cursor position, etc
+	if version >= 700
+		let b:saved_view = winsaveview()
+	endif
+endfunction
+function! WinEntered()
+	"allow to switch with Ctrl+Tab to any buffer
+	set buflisted
+	"restore cursor position, etc
+	if exists("b:saved_view")
+		call winrestview(b:saved_view)
+	endif
+	call WinSwitched()
+endfunction
+
+" suppres bugs when reloading ~/.vimrc
+if !exists("g:insertmode_backup")
+	" save default insert mode setting
+	let g:insertmode_backup = &insertmode
+endif
+call SwitchToWinType(1)
+function! WinSwitched()
+	"set ch=2
+	"echo "buf:".bufname("%")
+	"sleep 1
+	"help or dir listing
+	call SwitchToWinType((&modifiable) && !isdirectory(bufname("%")))
+endfunction
+"let g:SavedCSname = g:colors_name
+let g:SavedCmdHeight = &ch
+function! ReInitInGui()
+	colorscheme gpfault
+	set guioptions+=r "add scrollbar at right
+	"not needed in normal mode
+	unmap <S-Insert>
+	call MapShiftInsert()
+	execute "set ch=".g:SavedCmdHeight
+        "if exists("g:SavedCSname") && g:SavedCSname!=""
+	"	execute "colorscheme ".g:SavedCSname
+	"endif
+	"if has("gui_win32")
+	"	if $LANG=~"^RU"
+	"		simalt ~ð "Maximize window (MS Windows, russian locale)
+	"	endif
+	"endif
+endfunction
+autocmd BufNew * call BufCreated()
+autocmd BufWinEnter * call WinEntered()
+autocmd BufWinLeave * call WinLeaved()
+"call ReInitInGui()
+autocmd GuiEnter * call ReInitInGui()
+"autocmd WinEnter * call WinSwitched()"
+"autocmd BufFilePost * call WinSwitched()
+"autocmd InsertEnter * call WinSwitched()
+"autocmd InsertLeave * call WinSwitched()
+"calling help or  directory listing leads to swthcing filetype
+autocmd FileType * call WinSwitched()
+
+"source ~/vimrcextended
+"highlite symbols
+"function! HighliteSymbols()
+"	syntax match Delimeter /[\[\](){}!@%^&*-+=|]/
+"	syntax match Delimeter /\/[^\/*]\&\//
+"endfunction
+
+colorscheme gpfault
+
+function! InsertModeEscape(noforce)
+	if pumvisible()
+		return "\<C-C>"
+	else
+		if exists("g:UseEscToMinimize") && a:noforce
+			stop
+			return ""
+		elseif exists("g:UseEscToQuit") && a:noforce
+			return "\<C-O>:bdel|if bufname('%')==''|quit|endif\<CR>"
+		else
+			unlet! g:UseEscToMinimize
+			unlet! g:UseEscToQuit
+			return "\<C-O>:"
+		endif
+	endif
+endfunction
+
+function! NormalModeEscape(noforce)
+if pumvisible()
+	return "\<C-C>"
+else
+	if exists("g:UseEscToMinimize") && a:noforce
+		stop
+		return ""
+	elseif exists("g:UseEscToQuit") && a:noforce
+		return ":bdel|if bufname('%')==''|quit|endif\<CR>"
+	else
+		unlet! g:UseEscToMinimize
+		unlet! g:UseEscToQuit
+		return ":"
+	endif
+endif
+endfunction
+
+if has("gui_running") || has("win32") "looks like bug
+	"Use Esc to switch to cmdline
+	if version >= 700
+		inoremap <Esc> <C-R>=InsertModeEscape(1)<CR>
+		inoremap <S-Esc> <C-R>=InsertModeEscape(0)<CR>
+		nnoremap <expr> <Esc> NormalModeEscape(1)
+		nnoremap <expr> <S-Esc> NormalModeEscape(0)
+	else
+		inoremap <Esc> <C-O>:
+		nnoremap <Esc> :
+	endif
+endif
+
+function! InsertModeTab()
+	if getline('.')  =~ '^\s*$'
+		return "\<Tab>"
+	elseif strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<C-O>>>"
+	else
+		if version >= 700
+			if pumvisible() || &omnifunc==""
+				return "\<C-N>"
+			else 
+				return "\<C-X>\<C-O>"
+			endif
+		else
+			return "\<C-N>"
+		endif
+	endif
+endfunction
+inoremap <Tab> <C-R>=InsertModeTab()<CR>
+function! InsertModeShiftTab()
+   	if getline('.')  =~ '^\s*$'
+		return "\<C-O><<\<End>"
+	elseif strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<C-O><<"
+	else
+		if version >= 700
+			if pumvisible() || &omnifunc==""
+				return "\<C-P>"
+			else 
+				return "\<C-X>\<C-O>"
+			endif
+		else
+			return "\<C-P>"
+		endif
+	endif
+endfunction	
+inoremap <S-Tab> <C-R>=InsertModeShiftTab()<CR>
+function! InsertModeHome()
+	if col('.')==1
+		return "\<C-O>^"
+	else
+		return "\<Home>"
+endfunction
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+"Smart Home
+inoremap <Home> <C-R>=InsertModeHome()<CR>
+
+au BufRead,BufNewFile *  setfiletype txt
+au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.py set expandtab
+
+function! Getnumberofbuffers()
+	redir => ls_buffers_result
+		silent ls
+	redir END
+	return len(split(ls_buffers_result, "\n"))
+endfunction
+"set fillchars=stl:^,stlnc:-,vert:\|,diff: ,fold:- "set chars for diff deleted lines
+"set guioptions+=compatibility
+if has("unix")
+	runtime ftplugin/man.vim
+else
+	let $LANG="ru.UTF8"
+	set encoding=utf8
+	set langmenu=ru
+	source $VIMRUNTIME/delmenu.vim
+	source $VIMRUNTIME/menu.vim
+endif
+
+let g:clang_use_library=1
+let g:clang_complete_macros=1
+
+let g:clang_snippets = 1
+let g:clang_snippets_engine = 'clang_complete'
+let g:clang_auto_select = 1
+let g:clang_library_path = '/home/vgalkin/bin'
