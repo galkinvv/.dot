@@ -18,8 +18,8 @@ hi DiffText   ctermbg=Brown	   guibg=#303060
 hi DiffDelete ctermbg=bg ctermfg=bg  guibg=bg guifg=bg
 "hi Directory
 hi ErrorMsg   ctermfg=White 	   ctermbg=DarkRed  guibg=DarkRed	    guifg=White
-"hi FoldColumn ctermfg=DarkBlue	   ctermbg=Grey     guibg=Grey	    guifg=DarkBlue
-"hi Folded     ctermbg=Grey	   ctermfg=DarkBlue guibg=LightGrey guifg=DarkBlue
+hi FoldColumn ctermfg=LightBlue	   ctermbg=Black guifg=LightBlue    guibg=#181800
+hi Folded     ctermfg=LightBlue    ctermbg=Black guifg=LightBlue	guibg=#181800
 hi IncSearch  ctermfg=NONE ctermbg=green  cterm=none     guifg=NONE guibg=#30b030 gui=none
 "hi LineNr     ctermfg=Brown	   guifg=Brown
 hi ModeMsg    ctermfg=Yellow cterm=none      guifg=Yellow  gui=none
