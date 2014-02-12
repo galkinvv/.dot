@@ -377,8 +377,10 @@ call MapEW("<A-F2>",":call CtlBackupAs()<CR>")
 call MapEW("<A-F4>",":quitall<CR>")
 " F9 is make
 call MapEW("<F9>",":make<CR>")
-" F9 is make & run (assume makefile has target run)
+" Ctrl+F9 is make & run (assume makefile has target run)
 call MapEW("<C-F9>",":!make -s run<CR>")
+" Ctrl+F7 is compile current file
+call MapEW("<C-F7>",":make quickcompile QUICK_SOURCE=%<CR>")
 " Ctrl+F1 is context man						
 call MapEW("<C-F1>",":exec \"Man \".expand(\"<cword>\")<CR>")
 
