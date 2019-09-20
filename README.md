@@ -7,23 +7,23 @@ exec sudo env PATH="$PATH" py-spy top --nonblocking --pid $1
 ```
 ## perf
 ```sh
-#Profiling single thread: step 1 outside docker
+#Profiling single thread: step 1 outside docker, saving data in files and cache into .debug
 TID=12345
 PREFIX=main
 sudo sh -c 'echo 1 > /proc/sys/kernel/sched_schedstats'
-sudo perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_sched -e sched:sched_stat_sleep -e sched:sched_switch -m1G -- sleep 500 &
-sudo perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_oncpu -F 2 -- sleep 500 &
+sudo env HOME=`pwd` perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_sched -e sched:sched_stat_sleep -e sched:sched_switch -m1G -- sleep 50 &
+sudo env HOME=`pwd` perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_oncpu -F 20 -- sleep 50 &
 wait
-sudo perf inject -s -i ${PREFIX}_sched -o ${PREFIX}_slept
+sudo env HOME=`pwd` perf inject -s -i ${PREFIX}_sched -o ${PREFIX}_slept
 
 #Profiling single thread: step 2 inside docker
 PREFIX=main
 
-sudo perf script -i ${PREFIX}_slept -F ip,sym,symoff,dso,tid,trace,period,event > ${PREFIX}_slept.txt
-sudo perf script -i ${PREFIX}_oncpu -F ip,sym,symoff,dso,tid > ${PREFIX}_oncpu.txt
+sudo env HOME=`pwd` perf script -i ${PREFIX}_slept -F ip,sym,symoff,dso,tid,trace,period,event > ${PREFIX}_slept.txt
+sudo env HOME=`pwd` perf script -i ${PREFIX}_oncpu -F ip,sym,symoff,dso,tid > ${PREFIX}_oncpu.txt
 
 awk '
-/sched:sched_switch: prev_comm=/ { samples_1kkk=int($2)/500; $2=$1"TID-OffCPU"; $1=""}
+/sched:sched_switch: prev_comm=/ { samples_1kkk=int($2)/50; $2=$1"TID-OffCPU"; $1=""}
 NF < 1 {printf "%d\n\n", samples_1kkk}
 {print}
 ' ${PREFIX}_slept.txt > ${PREFIX}_slept_counted.txt
