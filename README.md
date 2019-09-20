@@ -10,6 +10,7 @@ exec sudo env PATH="$PATH" py-spy top --nonblocking --pid $1
 #Profiling single thread: step 1 outside docker
 TID=12345
 PREFIX=main
+sudo -s '' # prepare for async sudo
 sudo perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_sched -e sched:sched_stat_sleep -e sched:sched_switch -m1G -- sleep 500 &
 sudo perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_oncpu -F 2 -- sleep 500 &
 wait
