@@ -37,6 +37,20 @@ NF == 1 {$1 = $1"TID-OnCPU"}
 (echo -e "\n\n\n\n\n"; cat ${PREFIX}_oncpu_counted.txt ${PREFIX}_slept_counted.txt)| c++filt |grep -v ' _start+' | grep -v '/usr/bin/python3.6' | sed -e "s/(/[/g;s/)/]/g;s/\+/_/g" | sed -e 's/[0-9a-f]\+ \([^[]\)/\1/' | ~/FlameGraph/stackcollapse.pl | ~/FlameGraph/flamegraph.pl --title ${PREFIX}_all > ${PREFIX}_all_flame.svg
 ```
 
+## vlc
+```sh
+#webcam-record
+TARGET_DIR=~/some-existing-dir
+killall -9 vlc
+sleep 1
+vlc -v v4l2:///dev/video0 :v4l2-chroma=MJPG :v4l2-width=1280 :v4l2-height=960 :v4l2-fps=30 :input-slave=pulse:// --no-sout-display-audio --sout-file-format --sout "#duplicate{dst='transcode{acodec=mp3,vcodec=x264{crf=15}}:file{mux=mp4,dst=${TARGET_DIR}/webcam-record-%Y-%m-%d_%Hh%Mm%Ss.mp4}',dst='display'}"
+
+killall -9 vlc
+sleep 1
+
+vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)
+```
+
 # Optimizing performance
 ## CPU, Cuda, Opencl
 Programming Parallel Computers  Aalto University - http://ppc.cs.aalto.fi/
