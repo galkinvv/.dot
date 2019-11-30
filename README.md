@@ -57,6 +57,11 @@ vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)
 zswap.enabled=1 zswap.zpool=zsmalloc zswap.compressor=zstd zswap.max_pool_percent=42
 #drm tracing
 log_buf_len=4M drm.debug=0x1e
+#nvidia i2c ina3221
+$ nvidia-smi
+$ modprobe i2c-dev
+$ i2cdetect -l
+...
 ```
 
 # Optimizing performance
