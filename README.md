@@ -57,11 +57,15 @@ vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)
 zswap.enabled=1 zswap.zpool=zsmalloc zswap.compressor=zstd zswap.max_pool_percent=42
 #drm tracing
 log_buf_len=4M drm.debug=0x1e
+
 #nvidia i2c ina3221
 $ nvidia-smi
 $ modprobe i2c-dev
 $ i2cdetect -l
-...
+$ i2cget -y 3 0x40 0x01 w
+
+# make raid resync not eat all resources
+echo 42000 > /proc/sys/dev/raid/speed_limit_max
 ```
 
 # Optimizing performance
