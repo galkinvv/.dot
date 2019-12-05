@@ -1,4 +1,4 @@
-# Command lines
+# Command lines linux
 ## py-spy
 ```sh
 python3 ./setup.py install --prefix ~/py-spy-install
@@ -66,6 +66,12 @@ $ i2cget -y 3 0x40 0x01 w
 
 # make raid resync not eat all resources
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
+```
+
+# Command lines windows
+```cmd
+::show stderr and stdout of a GUI app (still buffered)
+cmd /k GUIapp.exe 2>&1 | findstr .
 ```
 
 # Optimizing performance
