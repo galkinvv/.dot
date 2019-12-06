@@ -62,6 +62,9 @@ zswap.enabled=1 zswap.zpool=zsmalloc zswap.compressor=zstd zswap.max_pool_percen
 #drm tracing
 log_buf_len=4M drm.debug=0x1e
 
+#zswap stats
+# for f in /sys/kernel/debug/zswap/*; do echo -n "$f: "; cat $f; done
+
 #nvidia i2c ina3221
 $ nvidia-smi
 $ modprobe i2c-dev
