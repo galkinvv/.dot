@@ -53,6 +53,7 @@ killall -9 vlc
 sleep 1
 
 vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
+```
 
 ## kernel
 ```
