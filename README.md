@@ -40,16 +40,19 @@ NF == 1 {$1 = $1"TID-OnCPU"}
 ## vlc
 ```sh
 #webcam-record
-TARGET_DIR=~/some-existing-dir
+TARGET_DIR=~/some-dir
+DEV=/dev/video0
+mkdir -p $TARGET_DIR
 killall -9 vlc
 sleep 1
-vlc -v v4l2:///dev/video0 :v4l2-chroma=MJPG :v4l2-width=1280 :v4l2-height=960 :v4l2-fps=30 :input-slave=pulse:// --no-sout-display-audio --sout-file-format --sout "#duplicate{dst='transcode{acodec=mp3,vcodec=x264{crf=15}}:file{mux=mp4,dst=${TARGET_DIR}/webcam-record-%Y-%m-%d_%Hh%Mm%Ss.mp4}',dst='display'}"
+power_line_frequency
+v4l2-ctl --device $DEV --set-ctrl exposure_auto_priority=0
+vlc -v v4l2://$DEV:chroma=MJPG:width=1280:height=960:fps=25 :input-slave=pulse:// --no-sout-display-audio --sout-file-format --sout "#duplicate{dst='transcode{acodec=mp3,ab=160,channels=1,vcodec=x264{crf=15}}:file{mux=mp4,dst=${TARGET_DIR}/webcam-record-%Y-%m-%d_%Hh%Mm%Ss.mp4}',dst='display'}"
 
 killall -9 vlc
 sleep 1
 
-vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)
-```
+vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
 
 ## kernel
 ```
