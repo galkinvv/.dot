@@ -75,11 +75,15 @@ $ i2cget -y 3 0x40 0x01 w
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
 ```
 
-# Command lines windows
+# Windows
+## Command lines
 ```cmd
 ::show stderr and stdout of a GUI app (still buffered)
 cmd /k GUIapp.exe 2>&1 | findstr .
 ```
+## Ramdisk
+https://sourceforge.net/projects/imdisk-toolkit
+For best speed: Format as NTFS, mark as fixed.
 
 # Optimizing performance
 ## CPU, Cuda, Opencl
