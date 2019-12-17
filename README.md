@@ -74,6 +74,11 @@ $ i2cget -y 3 0x40 0x01 w
 # make raid resync not eat all resources
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
 ```
+## mount
+```
+# mount smb as readonly via cmdline
+$ sudo mount.cifs //lurat-pc/RO RO -o user=vgalkin,uid=$(id -u),gid=$(id -u),file_mode=0555,dir_mode=0555
+```
 
 # Windows
 ## Command lines
