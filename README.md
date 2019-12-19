@@ -54,6 +54,11 @@ sleep 1
 
 vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
 ```
+## git
+```sh
+# download HEAD subfolder via ssh (gitlab)
+git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Research/docker-files | tar xvf - --strip-components=2
+```
 
 ## kernel
 ```
