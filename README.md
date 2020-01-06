@@ -84,6 +84,18 @@ echo 42000 > /proc/sys/dev/raid/speed_limit_max
 # mount smb as readonly via cmdline
 $ sudo mount.cifs //lurat-pc/RO RO -o user=vgalkin,uid=$(id -u),gid=$(id -u),file_mode=0555,dir_mode=0555
 ```
+## hdd
+```
+# seek speed
+$ sudo ioping -R /dev/sdX
+
+# seq read speed
+hdparm -tT /dev/sdX
+
+# configure SAS drives for home use: Write cache on, backgroubd scan off
+$ sudo sdparm --set=WCE -S /dev/sdX
+$ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
+```
 
 # Windows
 ## Command lines
