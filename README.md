@@ -62,6 +62,9 @@ git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Researc
 
 ## kernel
 ```
+#usb webcam mic sound fix
+usbcore.autosuspend=-1
+
 #low-memory
 zswap.enabled=1 zswap.zpool=zsmalloc zswap.compressor=zstd zswap.max_pool_percent=42
 #drm tracing
