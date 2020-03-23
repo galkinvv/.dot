@@ -103,7 +103,7 @@ $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 ## docker
 ```
 # create container without command from image
-docker run -id -v $(pwd):/o2k:ro --name new_cont_name image_id bash
+docker run -id -v $(pwd):/data:ro --name new_cont_name image_id bash
 ```
 
 # Windows
