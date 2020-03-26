@@ -105,6 +105,13 @@ $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 # create container without command from image
 docker run -id -v $(pwd):/data:ro --name new_cont_name image_id bash
 ```
+## pulseaudio
+```
+#mixer, add to /etc/pulse/default.pa
+load-module module-null-sink sink_name=MixerOutput sink_properties="device.description='MixerOutput'"
+load-module module-loopback sink=MixerOutput source_output_properties="media.name='MixerInput1'" latency_msec=5
+load-module module-loopback sink=MixerOutput source_output_properties="media.name='MixerInput2'" latency_msec=5
+```
 
 # Windows
 ## Command lines
