@@ -58,6 +58,8 @@ vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
 ```sh
 # download HEAD subfolder via ssh (gitlab)
 git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Research/docker-files | tar xvf - --strip-components=2
+# branches head
+git clone https://github.com/VENDOR/REPO.git --branch master --single-branch --depth 1
 ```
 
 ## kernel
