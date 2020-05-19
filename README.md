@@ -122,6 +122,12 @@ Match User firefly
 	ForceCommand ssh -q -t firefly@10.42.0.247 $SSH_ORIGINAL_COMMAND
 ```
 
+## sh
+```sh
+SELF=`readlink -f "$0"`
+SELF_DIR=`dirname "$SELF"`
+```
+
 # Windows
 ## Command lines
 ```cmd
