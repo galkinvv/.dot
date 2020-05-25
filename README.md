@@ -128,6 +128,18 @@ SELF=`readlink -f "$0"`
 SELF_DIR=`dirname "$SELF"`
 ```
 
+## network
+### duplicate packets over bad connecetion via "nft < `file`". Put into a file:
+```
+table ip duppertable {
+  chain dupperchain {
+    type filter hook postrouting priority 100;
+    ip daddr 109.188.90.62 dup to 109.188.90.62;
+    ip daddr 109.188.90.62 dup to 109.188.90.62;
+  }
+}
+```
+
 # Windows
 ## Command lines
 ```cmd
