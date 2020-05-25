@@ -131,6 +131,7 @@ SELF_DIR=`dirname "$SELF"`
 ## network
 ### duplicate packets over bad connecetion via "nft < `file`". Put into a file:
 ```
+#!/usr/sbin/nft -f
 table ip duppertable {
   chain dupperchain {
     type filter hook postrouting priority 100;
