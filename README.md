@@ -127,6 +127,15 @@ Match User firefly
 SELF=`readlink -f "$0"`
 SELF_DIR=`dirname "$SELF"`
 ```
+## systemd
+```ini
+#/etc/systemd/system/dup.service
+[Service]
+ExecStart=/etc/galkinvv/dup.nft
+[Install]
+WantedBy=multi-user.targetroot
+#activate autostart by systemctl enable dup
+```
 
 ## network
 ### duplicate packets over bad connecetion via "nft < `file`". Put into a file:
@@ -139,6 +148,9 @@ table ip duppertable {
     ip daddr 109.188.90.62 dup to 109.188.90.62;
   }
 }
+
+#install nftables
+#check with nft list tables
 ```
 
 # Windows
