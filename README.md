@@ -151,6 +151,7 @@ table ip duppertable {
 
 #install nftables
 #check with nft list tables
+#delete with nft delete table duppertable
 ```
 
 # Windows
