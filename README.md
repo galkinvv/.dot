@@ -174,7 +174,7 @@ tc -s qdisc ls dev $TCIF
 ### test net perf
 ```
 scp -o 'Compression no' 185.189.12.232:/tmp/100Mb .
-iperf3 -c 185.189.12.232 --time 10000 -i 0.1 -l 1K
+iperf3 -c 185.189.12.232 --time 10000 -i 0.1 -l 1K --reverse
 ```
 
 # Windows
