@@ -164,12 +164,17 @@ TCIF=ens3
 tc qdisc del dev $TCIF root
 tc qdisc add dev $TCIF root handle 1: prio priomap 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 #tc qdisc add dev $TCIF parent 1:2 tbf rate 9mbit latency 900ms burst 1540
-tc qdisc add dev $TCIF parent 1:1 netem delay 800ms
+tc qdisc add dev $TCIF parent 1:1 netem delay 15ms
 tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 1 fw flowid 1:1
 tc qdisc add dev $TCIF parent 1:2 netem delay 250ms
 tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 2 fw flowid 1:2
 #view results
 tc -s qdisc ls dev $TCIF
+```
+### test net perf
+```
+scp -o 'Compression no' 185.189.12.232:/tmp/100Mb .
+iperf3 -c 185.189.12.232 --time 10000 -i 0.1 -l 1K
 ```
 
 # Windows
