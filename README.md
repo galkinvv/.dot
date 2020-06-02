@@ -146,12 +146,30 @@ table ip duppertable {
     type filter hook postrouting priority 100;
     ip daddr 109.188.90.62 dup to 109.188.90.62;
     ip daddr 109.188.90.62 dup to 109.188.90.62;
+    #mark duplicates as 0, 1, 2 for later different delaying
+    ip daddr 109.188.90.62 mark set numgen inc mod 3;
+
+    ip daddr 10.186.61.10 dup to 10.186.61.10;
   }
 }
 
 #install nftables
 #check with nft list tables
 #delete with nft delete table duppertable
+```
+
+### traffic shaping
+```sh
+TCIF=ens3
+tc qdisc del dev $TCIF root
+tc qdisc add dev $TCIF root handle 1: prio priomap 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+#tc qdisc add dev $TCIF parent 1:2 tbf rate 9mbit latency 900ms burst 1540
+tc qdisc add dev $TCIF parent 1:1 netem delay 800ms
+tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 1 fw flowid 1:1
+tc qdisc add dev $TCIF parent 1:2 netem delay 250ms
+tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 2 fw flowid 1:2
+#view results
+tc -s qdisc ls dev $TCIF
 ```
 
 # Windows
