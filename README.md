@@ -145,11 +145,17 @@ table ip duppertable {
   chain dupperchain {
     type filter hook postrouting priority 100;
     ip daddr 10.186.61.10 dup to 10.186.61.10;
-    ip daddr 10.186.61.10 dup to 10.186.61.10;
-    ip daddr 10.186.61.10 dup to 10.186.61.10;
-    ip daddr 10.186.61.10 dup to 10.186.61.10;
-    #mark duplicates as 0, 1, 2, 3, 4 for later different delaying
-    ip daddr 10.186.61.10 mark set numgen inc mod 5;
+    ip protocol != udp ip daddr 10.186.61.10 dup to 10.186.61.10;
+    ip protocol != udp ip daddr 10.186.61.10 dup to 10.186.61.10;
+    ip protocol != udp ip daddr 10.186.61.10 dup to 10.186.61.10;
+    ip protocol != udp ip daddr 10.186.61.10 mark set numgen inc mod 5;
+    udp sport != 443 ip daddr 10.186.61.10 dup to 10.186.61.10;
+    udp sport != 443 ip daddr 10.186.61.10 dup to 10.186.61.10;
+    udp sport != 443 ip daddr 10.186.61.10 dup to 10.186.61.10;
+    #mark duplicates as 0, 1, 2 for later different delaying
+    udp sport != 443 ip daddr 10.186.61.10 mark set numgen inc mod 5;
+
+    #ip daddr 10.186.61.10 dup to 10.186.61.10;
   }
 }
 
@@ -164,9 +170,9 @@ TCIF=wghub
 tc qdisc del dev $TCIF root
 tc qdisc add dev $TCIF root handle 1: prio priomap 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 #tc qdisc add dev $TCIF parent 1:2 tbf rate 9mbit latency 900ms burst 1540
-tc qdisc add dev $TCIF parent 1:1 netem delay 35ms
+tc qdisc add dev $TCIF parent 1:1 netem delay 35ms limit 20
 tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 1 fw flowid 1:1
-tc qdisc add dev $TCIF parent 1:2 netem delay 300ms
+tc qdisc add dev $TCIF parent 1:2 netem delay 300ms limit 100
 tc filter add dev $TCIF parent 1: protocol ip prio 1 handle 2 fw flowid 1:2
 #view results
 tc -s qdisc ls dev $TCIF
