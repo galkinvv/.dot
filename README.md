@@ -193,6 +193,13 @@ cmd /k GUIapp.exe 2>&1 | findstr .
 https://sourceforge.net/projects/imdisk-toolkit
 For best speed: Format as NTFS, mark as fixed.
 
+# Crossplatform
+## Aria2c
+```sh
+#robust download
+aria2c --max-connection-per-server=5 --summary-interval=9 --show-console-readout=false --retry-wait=10
+```
+
 # Optimizing performance
 ## CPU, Cuda, Opencl
 Programming Parallel Computers  Aalto University - http://ppc.cs.aalto.fi/
