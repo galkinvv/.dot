@@ -197,7 +197,7 @@ For best speed: Format as NTFS, mark as fixed.
 ## Aria2c
 ```sh
 #robust download
-aria2c --max-connection-per-server=5 --summary-interval=9 --show-console-readout=false --retry-wait=10
+aria2c --max-connection-per-server=5 --min-split-size=1M --summary-interval=9 --show-console-readout=false --retry-wait=10 #add-url-here
 ```
 
 # Optimizing performance
