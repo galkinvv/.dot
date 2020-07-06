@@ -84,6 +84,22 @@ $ i2cget -y 3 0x40 0x01 w
 # make raid resync not eat all resources
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
 ```
+### single module rebuild for distro kernel
+* edit Makefile
+```Makefile
+VERSION = 5
+PATCHLEVEL = 7
+SUBLEVEL = 0
+EXTRAVERSION = -1-cloud-amd64
+```
+* copy config from distro as .config
+* copy Module.symvers from distro
+* run `make prepare scripts`
+* remove unneeded objects from folders `drivers/net/Makefile`
+* run `make M=drivers/net modules`
+* check that Module.symvers not deleted
+* use generated .ko
+
 ## mount
 ```
 # mount smb as readonly via cmdline
