@@ -183,6 +183,42 @@ scp -o 'Compression no' 185.189.12.232:/tmp/100Mb .
 iperf3 -c 10.186.61.1 --time 10000 -i 0.5 -l 1K -w 65000 --reverse
 ```
 
+### bpf fast drop
+```c
+//build with: clang-10 -I/usr/include/x86_64-linux-gnu/  -O2 -Wall -target bpf -c xdp-drop.c -o xdp-drop.o
+//load with: sudo ip -force link set dev ens3 xdpgeneric obj xdp-drop.o
+#include <linux/bpf.h>
+#include <linux/if_ether.h>
+#include <netinet/in.h>
+#include <stdint.h>
+
+__attribute__((section("prog"), used))
+int xdp_drop(struct xdp_md *ctx)
+{
+    // Read data
+    void* data_end = (void*)(long)ctx->data_end;
+    void* data = (void*)(long)ctx->data;
+
+    // Handle data as an ethernet frame header
+    struct ethhdr *eth = data;
+
+    // Check frame header size
+    if (data + sizeof(*eth) > data_end) {
+        return XDP_DROP;
+    }
+
+    // Check ip6
+    if ((uint16_t)eth->h_proto == htons(ETH_P_IPV6)) {
+        return XDP_DROP;
+    }
+    return XDP_PASS;
+}
+
+__attribute__((section("licence"), used))
+char __license[] = "GPL";
+
+```
+
 # Windows
 ## Command lines
 ```cmd
