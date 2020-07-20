@@ -37,7 +37,7 @@ NF == 1 {$1 = $1"TID-OnCPU"}
 (echo -e "\n\n\n\n\n"; cat ${PREFIX}_oncpu_counted.txt ${PREFIX}_slept_counted.txt)| c++filt |grep -v ' _start+' | grep -v '/usr/bin/python3.6' | sed -e "s/(/[/g;s/)/]/g;s/\+/_/g" | sed -e 's/[0-9a-f]\+ \([^[]\)/\1/' | ~/FlameGraph/stackcollapse.pl | ~/FlameGraph/flamegraph.pl --title ${PREFIX}_all > ${PREFIX}_all_flame.svg
 ```
 
-## vlc
+## video
 ```sh
 #webcam-record
 TARGET_DIR=~/some-dir
@@ -53,7 +53,12 @@ killall -9 vlc
 sleep 1
 
 vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
+
+
+#change h264 fps to a fixed, including bitstrea, fps
+mkvmerge --default-duration 0:30fps --fix-bitstream-timing-information 0 input-file.ext -o f30.mkv
 ```
+
 ## git
 ```sh
 # download HEAD subfolder via ssh (gitlab)
