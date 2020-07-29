@@ -88,6 +88,13 @@ $ i2cget -y 3 0x40 0x01 w
 
 # make raid resync not eat all resources
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
+
+#nvidia rmmod
+sudo kill -9 $(pidof nvidia-persistenced)
+sleep 0.1
+sudo rmmod nvidia_drm nvidia_modeset nvidia_uvm nvidia
+
+
 ```
 ### single module rebuild for distro kernel
 * edit Makefile
