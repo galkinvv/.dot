@@ -257,6 +257,15 @@ cmd /k GUIapp.exe 2>&1 | findstr .
 https://sourceforge.net/projects/imdisk-toolkit
 For best speed: Format as NTFS, mark as fixed.
 
+## Store
+* enable installation of all apps in security settings
+* get appx & blockmap from https://store.rg-adguard.net/
+* install via Add-AppxPackage
+* start LicenseManager (Windows License Manager Service)
+* start wlidsvc (Microsoft Account Sign-in Assistant)
+* run app first time 
+* stop services
+
 # Crossplatform
 ## Aria2c
 ```sh
