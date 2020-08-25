@@ -266,6 +266,17 @@ For best speed: Format as NTFS, mark as fixed.
 * run app first time 
 * stop services
 
+## Use net 4 for .net App.exe
+* Create `App.exe.config` with
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" />
+  </startup>
+</configuration>
+```
+
 # Crossplatform
 ## Aria2c
 ```sh
