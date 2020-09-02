@@ -94,6 +94,15 @@ sudo kill -9 $(pidof nvidia-persistenced)
 sleep 0.1
 sudo rmmod nvidia_drm nvidia_modeset nvidia_uvm nvidia
 
+#reboot now
+#!/bin/sh
+echo 1 > /proc/sys/kernel/sysrq
+#echo e > /proc/sysrq-trigger
+sleep 1
+echo s > /proc/sysrq-trigger 
+nohup sh -c 'sleep 1; echo u > /proc/sysrq-trigger; echo s > /proc/sysrq-trigger;  sleep 10; echo b > /proc/sysrq-trigger' &
+killall -9 sshd
+
 
 ```
 ### single module rebuild for distro kernel
