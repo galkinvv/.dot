@@ -205,25 +205,19 @@ table ip duppertable {
 ```
 #!/usr/sbin/nft -f
 
-flush ruleset
-table inet filter {
-        chain input {
-                type filter hook input priority 0;
-        }
-        chain forward {
-                type filter hook forward priority 0;
-        }
+table inet localttlset {
         chain output {
                 type filter hook output priority 0;
                 ip ttl set 64
         }
 }
-table ip mangle {
+table ip inttlset {
         chain prerouting {
-                type filter hook prerouting priority mangle; policy accept;
+                type filter hook prerouting priority 0; policy accept;
                 ip ttl set 65
         }
 }
+
 ```
 
 ### traffic shaping
