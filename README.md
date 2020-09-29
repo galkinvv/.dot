@@ -201,6 +201,31 @@ table ip duppertable {
 #delete with nft delete table duppertable
 ```
 
+### ttl local & forwarded set to 64 via nftables
+```
+#!/usr/sbin/nft -f
+
+flush ruleset
+table inet filter {
+        chain input {
+                type filter hook input priority 0;
+        }
+        chain forward {
+                type filter hook forward priority 0;
+        }
+        chain output {
+                type filter hook output priority 0;
+                ip ttl set 64
+        }
+}
+table ip mangle {
+        chain prerouting {
+                type filter hook prerouting priority mangle; policy accept;
+                ip ttl set 65
+        }
+}
+```
+
 ### traffic shaping
 ```sh
 TCIF=wghub
