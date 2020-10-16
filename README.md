@@ -219,6 +219,16 @@ table ip inttlset {
 }
 
 ```
+### port forwarding to existing nat
+```
+table ip portfwd {
+  chain portfwdchain {
+    type nat hook prerouting priority 90;
+    #transmission torrent
+    tcp dport 51413 dnat to 10.186.61.10;
+  }
+}
+```
 
 ### traffic shaping
 ```sh
