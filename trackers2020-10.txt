@@ -27,3 +27,5 @@ udp://tracker.internetwarriors.net:1337/announce
 udp://tracker.cyberia.is:6969/announce
 
 http://bt2.t-ru.org/ann?magnet
+
+http://bt4.rutracker.org/ann
