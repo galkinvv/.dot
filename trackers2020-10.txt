@@ -13,3 +13,9 @@ udp://tracker.tiny-vps.com:6969/announce
 http://tracker.opentrackr.org:1337/announce
 
 http://91.217.91.21:3218/announce
+
+udp://opentor.org:2710
+
+udp://tracker.coppersurfer.tk:6969
+
+udp://exodus.desync.com:6969
