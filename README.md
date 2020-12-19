@@ -161,7 +161,7 @@ Match User firefly
 
 ## sh
 ```sh
-SELF=`readlink -f "$0"`
+SELF=`realpath "$0"`
 SELF_DIR=`dirname "$SELF"`
 ```
 ## systemd
