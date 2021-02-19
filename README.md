@@ -165,6 +165,8 @@ SELF=`realpath "$0"`
 SELF_DIR=`dirname "$SELF"`
 
 #single arg as command
+#requires python
+/usr/bin/python3 '-cimport os;os.system("ls -l")'
 #portable, side effects
 /usr/bin/script '-cls -l'
 #20.04+
