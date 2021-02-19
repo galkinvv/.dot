@@ -163,7 +163,14 @@ Match User firefly
 ```sh
 SELF=`realpath "$0"`
 SELF_DIR=`dirname "$SELF"`
+
+#single arg as command
+#portable, side effects
+/usr/bin/script '-cls -l'
+#20.04+
+/usr/bin/env '-Sls -l'
 ```
+
 ## systemd
 ```ini
 #/etc/systemd/system/dup.service
