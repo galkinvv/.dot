@@ -88,6 +88,8 @@ $ i2cget -y 3 0x40 0x01 w
 
 # make raid resync not eat all resources
 echo 42000 > /proc/sys/dev/raid/speed_limit_max
+# initiate fast raid readd
+mdadm /dev/md1 -a /dev/sdc3
 
 #nvidia rmmod
 sudo kill -9 $(pidof nvidia-persistenced)
