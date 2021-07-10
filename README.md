@@ -174,6 +174,12 @@ SELF_DIR=`dirname "$SELF"`
 #20.04+
 /usr/bin/env '-Sls -l'
 ```
+## grub
+```
+#install grub entirely on the efi partition
+grub-install --compress xz --boot-directory=/boot/efi --themes= --recheck --efi-directory=/boot/efi
+grub-mkconfig > /boot/efi/grub/grub.cfg
+```
 
 ## systemd
 ```ini
