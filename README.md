@@ -303,6 +303,9 @@ char __license[] = "GPL";
 ```
 
 # Windows
+## Win7 SP1 fast & less risky core update
+https://support.microsoft.com/en-us/topic/may-14-2019-kb4499175-security-only-update-4633b67f-f683-7731-f332-e1e7ec35bfc5
+
 ## Command lines
 ```cmd
 ::show stderr and stdout of a GUI app (still buffered)
