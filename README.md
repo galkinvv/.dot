@@ -301,6 +301,9 @@ __attribute__((section("licence"), used))
 char __license[] = "GPL";
 
 ```
+## pacman
+Partial upgrade with deps
+```pacman -S --needed $(pactree -u mkinitcpio)```
 
 # Windows
 ## Win7 SP1 fast & less risky core update
