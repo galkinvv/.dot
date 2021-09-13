@@ -401,6 +401,11 @@ api-ms-win-service-private-l1-1-1.dll
 ext-ms-win-advapi32-encryptedfile-l1-1-0.dll
 ext-ms-win-ntuser-keyboard-l1-2-1.dll
 ```
+And from windbg distro:
+```
+api-ms-win-downlevel-kernel32-l2-1-0.dll
+api-ms-win-eventing-provider-l1-1-0.dll
+```
 
 ## Command lines
 ```cmd
