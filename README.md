@@ -436,6 +436,9 @@ For best speed: Format as NTFS, mark as fixed.
 </configuration>
 ```
 
+## MSVC debugger find vtables in memory related to address
+```(void***(*(*(*)[1000])[1000])[1000])0x0000000073330040, 1000```
+
 # Crossplatform
 ## Aria2c
 ```sh
