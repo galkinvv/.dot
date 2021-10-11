@@ -412,6 +412,14 @@ api-ms-win-eventing-provider-l1-1-0.dll
 ::show stderr and stdout of a GUI app (still buffered)
 cmd /k GUIapp.exe 2>&1 | findstr .
 ```
+## VirtualBox fix access to raw drive:
+* diskpart
+    * `select disk 0`
+    * `offline disk`
+    * `ATTRIBUTES DISK CLEAR READONLY`
+* close VirtualBox
+* reopen VirtualBox as admin
+
 ## Ramdisk
 https://sourceforge.net/projects/imdisk-toolkit
 For best speed: Format as NTFS, mark as fixed.
