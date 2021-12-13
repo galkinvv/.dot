@@ -57,6 +57,12 @@ vlc ${TARGET_DIR}/$(ls -t ${TARGET_DIR}|head -n 1)```
 
 #change h264 fps to a fixed, including bitstrea, fps
 mkvmerge --default-duration 0:30fps --fix-bitstream-timing-information 0 input-file.ext -o f30.mkv
+
+# adjust ausio-video position and cut
+ffmpeg -i overview.mp3 -ss 00:00:06 -i overview.mp4 -ss 00:00:05 -t 00:01:40 -pix_fmt yuv420p -threads 3 -c:a aac v0.2overview.mp4
+
+# x11 grab rect
+ffmpeg -video_size 480x800 -framerate 30 -f x11grab -i :0.0 -pix_fmt yuv420p -threads 3 overview.mp4
 ```
 
 ## git
