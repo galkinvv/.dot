@@ -134,6 +134,22 @@ EXTRAVERSION = -1-cloud-amd64
 # mount smb as readonly via cmdline
 $ sudo mount.cifs //lurat-pc/RO RO -o user=vgalkin,uid=$(id -u),gid=$(id -u),file_mode=0555,dir_mode=0555
 ```
+## gpu
+```
+# set fan to 100 with non-interactive startx
+# startx -- -ignoreABI
+#
+#Section "Device"
+#        Identifier  "aticonfig-Device[0]-0"
+#        Option  "Coolbits" "28"
+#        Driver      "nvidia"
+#EndSection
+# run
+nvidia-settings -c :0 -a "[gpu:0]/GPUFanControlState=1"
+nvidia-settings -c :0 -a "[fan:0]/GPUTargetFanSpeed=100"
+# exit x server, fan speed left ok
+```
+
 ## hdd
 ```
 # seek speed
@@ -307,6 +323,10 @@ __attribute__((section("licence"), used))
 char __license[] = "GPL";
 
 ```
+### ftp recusive list
+
+`lftp ftp://host.com/ -e 'find -l' > ftp-find-l.txt`
+
 ## pacman
 Partial upgrade with deps
 ```pacman -S --needed $(pactree -u mkinitcpio)```
