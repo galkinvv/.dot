@@ -438,6 +438,15 @@ api-ms-win-eventing-provider-l1-1-0.dll
 ::show stderr and stdout of a GUI app (still buffered)
 cmd /k GUIapp.exe 2>&1 | findstr .
 ```
+
+```powershell
+#copy this folder from network drive
+$TargetDir = "d:\dist-synced"
+Write-Host "START copying from $(Get-Location) to $TargetDir ..."
+robocopy "." "$TargetDir" /MIR
+Write-Host "Copy COMPLETE from $(Get-Location)  to $TargetDir ..."
+pause
+```
 ## VirtualBox fix access to raw drive:
 * diskpart
     * `select disk 0`
