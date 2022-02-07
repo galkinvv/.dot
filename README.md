@@ -443,8 +443,8 @@ cmd /k GUIapp.exe 2>&1 | findstr .
 #copy this folder from network drive
 $TargetDir = "d:\dist-synced"
 Write-Host "START copying from $(Get-Location) to $TargetDir ..."
-robocopy "." "$TargetDir" /MIR
-Write-Host "Copy COMPLETE from $(Get-Location)  to $TargetDir ..."
+robocopy "." "$TargetDir" /NDL /MIR
+Write-Host "Copy COMPLETE from $(Get-Location) to $TargetDir ..."
 pause
 ```
 ## VirtualBox fix access to raw drive:
