@@ -440,10 +440,10 @@ cmd /k GUIapp.exe 2>&1 | findstr .
 ```
 
 ```powershell
-#copy this folder from network drive
-$TargetDir = "d:\dist-synced"
+#copy-this-folder-from-network-drive.ps1
+$TargetDir = "C:\steam\steamapps"
 Write-Host "START copying from $(Get-Location) to $TargetDir ..."
-robocopy "." "$TargetDir" /NDL /MIR
+robocopy  /NDL /MIR "." "$TargetDir" common *.ps1 appmanifest*.acf
 Write-Host "Copy COMPLETE from $(Get-Location) to $TargetDir ..."
 pause
 ```
