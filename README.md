@@ -332,6 +332,18 @@ Partial upgrade with deps
 ```pacman -S --needed $(pactree -u mkinitcpio)```
 
 # Windows
+
+## .Net
+Add .exe.config file to run .net 2-3 app on net 4
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" />
+  </startup>
+</configuration>
+```
+
 ## Win7 SP1 fast & less risky core update
 https://support.microsoft.com/en-us/topic/may-14-2019-kb4499175-security-only-update-4633b67f-f683-7731-f332-e1e7ec35bfc5
 
