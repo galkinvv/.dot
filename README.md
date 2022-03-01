@@ -195,6 +195,9 @@ SELF_DIR=`dirname "$SELF"`
 /usr/bin/script '-cls -l'
 #20.04+
 /usr/bin/env '-Sls -l'
+
+#recursive ls with size
+find . -type f -printf '%s\t %p\n'
 ```
 ## grub
 ```
