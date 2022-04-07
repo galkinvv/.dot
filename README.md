@@ -71,6 +71,8 @@ ffmpeg -video_size 480x800 -framerate 30 -f x11grab -i :0.0 -pix_fmt yuv420p -th
 git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Research/docker-files | tar xvf - --strip-components=2
 # branches head
 git clone https://github.com/VENDOR/REPO.git --branch master --single-branch --depth 1
+# extreme compression
+git -c repack.writeBitmaps=false -c core.compression=9  repack -a -d -f -F -n --window 4095 --depth 4095
 ```
 
 ## kernel
