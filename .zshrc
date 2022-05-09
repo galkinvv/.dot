@@ -42,18 +42,35 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen use oh-my-zsh
+
+#limit aliases
+export OH_ZSH="$(dirname "${ANTIGEN_CACHE}")/bundles/robbyrussell/oh-my-zsh"
+mkdir -p "${OH_ZSH}/cache/"
+echo 'alias grep="grep --color=auto"' > "${OH_ZSH}/cache/grep-alias"
+
+[[ $(sed -n '/^alias .*\(ls\|dir\)/p' "${OH_ZSH}/lib/directories.zsh") ]] && sed -i '/^alias .*\(ls\|dir\)/s/^/#/' "${OH_ZSH}/lib/directories.zsh"
 antigen apply
+alias l='ls --color=tty --almost-all --classify -l --no-group --group-directories-first -t'
 
 bindkey -e #emacs-based
 
 copy-to-beginning()
 {
+    # bug: at the beginning perfrorms insert
     # copy from cursor to beginning to kill ring and to clipboard
     zle backward-kill-line
     print -rn -- $CUTBUFFER|clipcopy
     zle yank
 }
 zle -N copy-to-beginning
+
+cut-to-beginning()
+{
+    # copy from cursor to beginning to kill ring and to clipboard
+    zle backward-kill-line
+    print -rn -- $CUTBUFFER|clipcopy
+}
+zle -N cut-to-beginning
 
 ### ctrl+arrows
 bindkey "\e[1;5C" forward-word
@@ -77,4 +94,6 @@ bindkey "\e[3@" kill-line
 
 ### ctrl+insert
 bindkey "\e[2;5~" copy-to-beginning
+### shift+del
+bindkey "\e[3;2~" cut-to-beginning
 
