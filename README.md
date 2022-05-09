@@ -201,6 +201,21 @@ SELF_DIR=`dirname "$SELF"`
 #recursive ls with size
 find . -type f -printf '%s\t %p\n'
 ```
+
+Cross platform python starting header for \*.py3.cmd files (WIP). Use LF line endings.
+```
+#!/usr/bin/env python3
+# & cls & (if not exist "%~dp0\python-3.8.10-win64-mini-portable\python.exe" (echo Fatal error: python-3.8.10-win64-mini-portable\python.exe not found) else ("%~dp0\python-3.8.10-win64-mini-portable\python.exe" "%~0" %*)) & pause & exit & # noqa: E501
+# this is python script with a special header to make it drga&drop executbale by linux and windows
+# cmd (assuming python-3.8.10-win64-mini-portable\python.exe is present) and shell
+# quoted strings below are for executing as '. ./filename' from shell without exec bit. Compatible with bash and zsh
+"`/usr/bin/env python3 -c pass && echo true || (echo Install python3 with package manager 1>&2 && echo return)`"
+"/usr/bin/env" "python3" "${BASH_SOURCE:-$0}" "$@"
+"return"
+# drag file over this script to calculate simple checksum
+import pathlib, sys  # noqa: E401, E402
+```
+
 ## grub
 ```
 #install grub entirely on the efi partition
