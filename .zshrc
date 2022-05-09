@@ -23,10 +23,10 @@ compinit
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt appendhistory autocd extendedglob nomatch notify
-bindkey -e
+
 # End of lines configured by zsh-newuser-install
 autoload -U promptinit
 promptinit
@@ -35,3 +35,46 @@ prompt adam1
 typeset -U PATH path
 path=("$path[@]" "$HOME/.cargo/bin")
 export PATH
+
+source /usr/share/zsh-antigen/antigen.zsh #installed via debian package manager
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen use oh-my-zsh
+antigen apply
+
+bindkey -e #emacs-based
+
+copy-to-beginning()
+{
+    # copy from cursor to beginning to kill ring and to clipboard
+    zle backward-kill-line
+    print -rn -- $CUTBUFFER|clipcopy
+    zle yank
+}
+zle -N copy-to-beginning
+
+### ctrl+arrows
+bindkey "\e[1;5C" forward-word
+bindkey "\e[1;5D" backward-word
+# urxvt
+bindkey "\eOc" forward-word
+bindkey "\eOd" backward-word
+
+### ctrl+delete
+bindkey "\e[3;5~" kill-word
+# urxvt
+bindkey "\e[3^" kill-word
+
+### ctrl+backspace
+bindkey '^H' backward-kill-word
+
+### ctrl+shift+delete
+bindkey "\e[3;6~" kill-line
+# urxvt
+bindkey "\e[3@" kill-line
+
+### ctrl+insert
+bindkey "\e[2;5~" copy-to-beginning
+
