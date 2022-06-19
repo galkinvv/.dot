@@ -113,7 +113,8 @@ echo s > /proc/sysrq-trigger
 nohup sh -c 'sleep 1; echo u > /proc/sysrq-trigger; echo s > /proc/sysrq-trigger;  sleep 10; echo b > /proc/sysrq-trigger' &
 killall -9 sshd
 
-
+#enable registers, mem and rom on a pcie device 01:00.0
+sudo setpci -s 01:00.0 ROM_ADDRESS=00000001:00000001 COMMAND=0407:0407
 ```
 ### single module rebuild for distro kernel
 * edit Makefile
