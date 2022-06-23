@@ -219,9 +219,10 @@ import pathlib, sys  # noqa: E401, E402
 
 ## grub
 ```
+#arch-chroot from upper distribution 	
 #install grub entirely on the efi partition
-grub-install --compress xz --boot-directory=/boot/efi --themes= --recheck --efi-directory=/boot/efi
-grub-mkconfig > /boot/efi/grub/grub.cfg
+grub-install --compress xz --boot-directory=/boot/efi --themes= --recheck --efi-directory=/boot/efi --removable
+grub-mkconfig -o /boot/efi/grub/grub.cfg
 ```
 
 ## systemd
