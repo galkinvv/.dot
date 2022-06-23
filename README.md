@@ -521,7 +521,7 @@ For best speed: Format as NTFS, mark as fixed.
 get https://raw.githubusercontent.com/openssl/openssl/a5f4099d275520caf90a28a88e889cb36683b412/apps/openssl.cnf
 comment `# providers = provider_sect`
 cd `C:\Users\username\AppData\Local\Barrier\SSL`
-run  & 'C:\Program Files\Barrier\openssl.exe' req -x509 -nodes -days 11365 -subj //CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem
+run `& 'C:\Program Files\Barrier\openssl.exe' req -x509 -nodes -days 11365 -subj //CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem`
 
 # Crossplatform
 ## Aria2c
