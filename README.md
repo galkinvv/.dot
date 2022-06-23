@@ -517,6 +517,12 @@ For best speed: Format as NTFS, mark as fixed.
 ## MSVC debugger find vtables in memory related to address
 ```(void***(*(*(*)[1000])[1000])[1000])0x0000000073330040, 1000```
 
+## barrier 2.4.0 windows fix
+get https://raw.githubusercontent.com/openssl/openssl/a5f4099d275520caf90a28a88e889cb36683b412/apps/openssl.cnf
+comment `# providers = provider_sect`
+cd `C:\Users\username\AppData\Local\Barrier\SSL`
+run  & 'C:\Program Files\Barrier\openssl.exe' req -x509 -nodes -days 11365 -subj //CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem
+
 # Crossplatform
 ## Aria2c
 ```sh
