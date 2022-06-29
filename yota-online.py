@@ -18,22 +18,11 @@ def get_base_station():
 			return line[len(prefix):].strip().decode('ascii')
 	return ""
 
-def reconnect_and_get_new_bs(try_fast):
+def reconnect_and_get_new_bs():
 	get_yota_url("cmd?action=disable-connect")
-	if not try_fast:
-		time.sleep(2)
-		get_yota_url("cmd?action=disable-connect")
-		time.sleep(5)
-		get_yota_url("cmd?action=enable-connect")
-		for i in range(40):
-			bs = get_base_station()
-			if bs: return bs
-			time.sleep(0.05)
-		get_yota_url("cmd?action=enable-connect")
-		for i in range(40):
-			bs = get_base_station()
-			if bs: return bs
-			time.sleep(0.05)
+	time.sleep(0.1)
+	get_yota_url("cmd?action=disable-connect")
+	time.sleep(0.2)
 	get_yota_url("cmd?action=enable-connect")
 	for i in range(400):
 		bs = get_base_station()
@@ -43,7 +32,7 @@ def reconnect_and_get_new_bs(try_fast):
 
 def calc_dont_reconnect_before_time(bs):
 	if bs in good_bs or bs in usable_slow_bs:
-		return time.monotonic() + 10
+		return time.monotonic() + 0
 	else:
 		return 0
 
@@ -58,7 +47,7 @@ while True:
 			while reconnect_after > time.monotonic():
 				time.sleep(1) #keep internet woking for some time
 		print(f"Current bs is {bs}, reconnecting")
-		bs = reconnect_and_get_new_bs(reconnect_after == 0)
+		bs = reconnect_and_get_new_bs()
 		reconnect_after = calc_dont_reconnect_before_time(bs)
 		print(f"New bs is {bs}")
 

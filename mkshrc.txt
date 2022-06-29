@@ -1,0 +1,26 @@
+#pass to mksh via ENV=/path/to/mkshrc.txt
+
+source /system/etc/mkshrc
+
+PS1=$(echo '$(precmd)\033[0;32m$(pwd)\033[0m')
+HOME=/sdcard/sc
+export HOME
+ENV=$HOME/mkshrc.txt
+export ENV
+cd
+
+function adb_connect_local
+{
+    #adb local shell, works after copying adb private key from ~/.android/adbkey to /sdcard/sc/.android/adbkey and enabling `adb tcpip 8888` over usb
+    HOME=/sdcard/sc
+    export HOME
+    adb kill-server
+    adb connect 127.0.0.1:8888
+    adb shell id
+    #ENV=$HOME/mkshrc.txt
+}
+function ccmd
+{
+    adb_connect_local
+    adb shell 'echo "chrome --no-zygote --no-sandbox --disable-gpu-sandbox --disable-gpu-driver-bug-workarounds --enable-zero-copy --enable-native-gpu-memory-buffers --in-process-gpu --ui-enable-zero-copy --enable-features=CheckerImaging,SkiaDeferredDisplayList --enable-media-suspend --enable-background-timer-throttling --enable-prefer-compositing-to-lcd-text --no-pings --use-skia-deferred-display-list --use-skia-renderer --renderer-process-limit=1 --profiler-timing=0 --limit-fps=5 --wm-window-animations-disabled --animation-duration-scale=0.001 --disable-login-animations --disable-media-session-api --disable-overscroll-edge-effect --disable-site-isolation-for-policy --disable-pull-to-refresh-effect --show-android-files-in-files-app" > /data/local/tmp/chrome-command-line'
+}
