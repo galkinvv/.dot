@@ -128,9 +128,9 @@ EXTRAVERSION = -1-cloud-amd64
 * copy Module.symvers from distro
 * run `make prepare scripts`
 * remove unneeded objects from folders `drivers/net/Makefile`
-* run `make M=drivers/net modules`
+* run `make M=drivers/net modules` or `make drivers/gpu/drm/amd/amdgpu/amdgpu.ko`
 * check that Module.symvers not deleted
-* use generated .ko
+* use generated .ko, like recompress `zstd -19 drivers/gpu/drm/amd/amdgpu/amdgpu.ko -o /usr/lib/modules/5.14.0-rc1-1-mainline/kernel/drivers/gpu/drm/amd/amdgpu/amdgpu.ko.zst`
 
 ## mount
 ```
