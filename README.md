@@ -530,6 +530,9 @@ run `& 'C:\Program Files\Barrier\openssl.exe' req -x509 -nodes -days 11365 -subj
 aria2c --max-connection-per-server=5 --min-split-size=1M --summary-interval=9 --show-console-readout=false --retry-wait=10 #add-url-here
 ```
 
+## Rust
+toolchain releases https://static.rust-lang.org/manifests.txt
+
 # Optimizing performance
 ## CPU, Cuda, Opencl
 Programming Parallel Computers  Aalto University - http://ppc.cs.aalto.fi/
