@@ -170,6 +170,11 @@ $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 ```
 # create container without command from image
 docker run -id -v $(pwd):/data:ro --name new_cont_name image_id bash
+
+
+# clonezilla
+podman run -d         --name clonezilla         --hostname clonezilla         --restart unless-stopped         --memory 128M         --privileged=true         -e TERM=xterm         -e TZ=Europe/Berlin         -v /dev:/dev         -v clonezilla_data:/root         -v clonezilla_logs:/var/log         -v /home/partimag:/home/partimag:shared         docker.io/theniwo/clonezilla:latest
+podman exec -it clonezilla clonezilla
 ```
 ## pulseaudio
 ```
