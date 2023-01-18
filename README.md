@@ -193,6 +193,11 @@ Match User firefly
 	AllowTcpForwarding no
 	ForceCommand ssh -q -t firefly@10.42.0.247 $SSH_ORIGINAL_COMMAND
 ```
+## admin
+```
+/etc/adduser.conf 
+NAME_REGEX="^[a-z][-a-z0-9_\.]*$"
+```
 
 ## sh
 ```sh
