@@ -186,12 +186,16 @@ load-module module-null-sink sink_name=MixerOutput sink_properties="device.descr
 load-module module-loopback sink=MixerOutput source_output_properties="media.name='MixerInput1'" latency_msec=5
 load-module module-loopback sink=MixerOutput source_output_properties="media.name='MixerInput2'" latency_msec=5
 ```
-## ssh server-side redirect
+## ssh 
 ```
+# server-side redirect
 Match User firefly
 	X11Forwarding no
 	AllowTcpForwarding no
 	ForceCommand ssh -q -t firefly@10.42.0.247 $SSH_ORIGINAL_COMMAND
+
+# automated ssh
+sshpass -p pass ssh user@host -p PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "cmd|piped cmd"
 ```
 ## admin
 ```
