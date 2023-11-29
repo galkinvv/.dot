@@ -553,6 +553,11 @@ aria2c --max-connection-per-server=5 --min-split-size=1M --summary-interval=9 --
 ## Rust
 toolchain releases https://static.rust-lang.org/manifests.txt
 
+## Python
+```python
+datetime.datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%S.%fZ') # date for filenames
+```
+
 # Optimizing performance
 ## CPU, Cuda, Opencl
 Programming Parallel Computers  Aalto University - http://ppc.cs.aalto.fi/
