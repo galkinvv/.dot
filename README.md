@@ -205,10 +205,11 @@ NAME_REGEX="^[a-z][-a-z0-9_\.]*$"
 
 ## sh
 ```sh
+#!/bin/bash
 set -euo pipefail # error on empty variables but dont clutter code with {} syntax
 shopt -s nullglob # empty glob pattern retuns empty list
 IFS=$'\n\t'
-SELF=`realpath "$0"`
+SELF=`realpath "$BASH_SOURCE"`
 SELF_DIR=`dirname "$SELF"`
 
 #single arg as command
