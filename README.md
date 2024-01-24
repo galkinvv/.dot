@@ -201,6 +201,10 @@ sshpass -p pass ssh user@host -p PORT -o StrictHostKeyChecking=no -o UserKnownHo
 ```
 /etc/adduser.conf 
 NAME_REGEX="^[a-z][-a-z0-9_\.]*$"
+
+#reintroduce  add-apt-repository
+install mint-common+mintsources+mint-translations
+sudo ln -s /usr/share/mintsources/virginia /usr/share/mintsources/NAME
 ```
 
 ## sh
