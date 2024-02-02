@@ -201,14 +201,19 @@ sshpass -p pass ssh user@host -p PORT -o StrictHostKeyChecking=no -o UserKnownHo
 ```
 /etc/adduser.conf 
 NAME_REGEX="^[a-z][-a-z0-9_\.]*$"
+
+#reintroduce  add-apt-repository
+install mint-common+mintsources+mint-translations
+sudo ln -s /usr/share/mintsources/virginia /usr/share/mintsources/NAME
 ```
 
 ## sh
 ```sh
+#!/bin/bash
 set -euo pipefail # error on empty variables but dont clutter code with {} syntax
 shopt -s nullglob # empty glob pattern retuns empty list
 IFS=$'\n\t'
-SELF=`realpath "$0"`
+SELF=`realpath "$BASH_SOURCE"`
 SELF_DIR=`dirname "$SELF"`
 
 #single arg as command
@@ -552,6 +557,11 @@ aria2c --max-connection-per-server=5 --min-split-size=1M --summary-interval=9 --
 
 ## Rust
 toolchain releases https://static.rust-lang.org/manifests.txt
+
+## Python
+```python
+datetime.datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%S.%fZ') # date for filenames
+```
 
 # Optimizing performance
 ## CPU, Cuda, Opencl
