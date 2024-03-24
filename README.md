@@ -242,6 +242,12 @@ Cross platform python starting header for \*.py3.cmd files (WIP). Use LF line en
 import pathlib, sys  # noqa: E401, E402
 ```
 
+Windows header distributable with python in relative directory
+```
+@classmethod # 2>nul & (if not exist "%~dp0\python64-win\python.exe" (echo Fatal python64-win\python.exe not found & pause) else (title %~f0 & "%~dp0\python64-win\python.exe" "%~f0" %*)) & exit /B & # noqa: E501
+def __unused(): "fake function to help writing header that allows executing same file as python and batch"
+```
+
 ## grub
 ```
 #arch-chroot from upper distribution 	
