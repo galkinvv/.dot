@@ -226,6 +226,9 @@ SELF_DIR=`dirname "$SELF"`
 
 #recursive ls with size
 find . -type f -printf '%s\t %p\n'
+
+date -u +"%Y-%m-%dT%H:%M:%SZ"
+2024-05-02T17:38:34Z
 ```
 
 Cross platform python starting header for \*.py3.cmd files (WIP). Use LF line endings.
