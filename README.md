@@ -16,7 +16,7 @@ sudo env HOME=`pwd` perf record -t $TID --call-graph dwarf,65528 -o ${PREFIX}_on
 wait
 sudo env HOME=`pwd` perf inject -s -i ${PREFIX}_sched -o ${PREFIX}_slept
 
-#Profiling single thread: step 2 inside docker
+#Profiling single thread step 2 inside docker
 PREFIX=main
 
 sudo env HOME=`pwd` perf script -i ${PREFIX}_slept -F ip,sym,symoff,dso,tid,trace,period,event > ${PREFIX}_slept.txt
@@ -227,8 +227,8 @@ SELF_DIR=`dirname "$SELF"`
 #recursive ls with size
 find . -type f -printf '%s\t %p\n'
 
-date -u +"%Y-%m-%dT%H:%M:%SZ"
-2024-05-02T17:38:34Z
+date -u +"%Y-%m-%dT%H-%M-%SZ"
+2024-05-02T17-38-34Z
 ```
 
 Cross platform python starting header for \*.py3.cmd files (WIP). Use LF line endings.
