@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        New script avito.ru
+// @name        avito-sort.js
 // @namespace   Violentmonkey Scripts
 // @match       https://www.avito.ru/*
 // @grant       none
@@ -12,6 +12,8 @@
   const buttons = document.querySelector('ul[data-marker=pagination-button]');
   buttons.querySelectorAll('a').forEach( (el) => {
         const href = el.getAttribute('href');
-        el.setAttribute('href', href+"&s="+sort_order);
+        if (!href.includes("&s=")) {
+          el.setAttribute('href', href+"&s="+sort_order);
+        }
     });
 })();
