@@ -170,7 +170,8 @@ $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 ```
 
 ## flatpak
-Access gvfs based locationd via portal: filesystem host + `org.gtk.vfs.*` - Talks in flatseal, maybe `--talk-name=org.gtk.vfs.*`
+Access gvfs based locationd via portal: filesystem host + ~`org.gtk.vfs.*` - Talks in flatseal, maybe `--talk-name=org.gtk.vfs.*`~
++ filesystem `xdg-run/gvfs`
 
 ## docker
 ```
