@@ -169,6 +169,9 @@ $ sudo sdparm --set=WCE -S /dev/sdX
 $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 ```
 
+## flatpak
+Access gvfs based locationd via portal: filesystem host + `org.gtk.vfs.*` - Talks in flatseal, maybe `--talk-name=org.gtk.vfs.*`
+
 ## docker
 ```
 # create container without command from image
