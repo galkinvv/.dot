@@ -71,7 +71,7 @@ S=filename; pngquant -Q 69-69 --nofs -vf --strip $S.png; advpng -z -4 -i 9 $S-or
 ## git
 ```sh
 # download HEAD subfolder via ssh (gitlab)
-git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Research/docker-files | tar xvf - --strip-components=2
+git archive --remote=ssh://git@gitlab.host.com/cv-srs/srs-extra.git HEAD Research/-files | tar xvf - --strip-components=2
 # branches head
 git clone https://github.com/VENDOR/REPO.git --branch master --single-branch --depth 1
 # extreme compression
@@ -167,6 +167,11 @@ hdparm -tT /dev/sdX
 # configure SAS drives for home use: Write cache on, backgroubd scan off
 $ sudo sdparm --set=WCE -S /dev/sdX
 $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
+```
+## qemu
+Run win7
+```
+qemu-system-x86_64 -accel kvm -M q35 -hda ./Win7_v1.img -m 4g -usb -device usb-tablet -smp 4
 ```
 
 ## flatpak
