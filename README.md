@@ -171,7 +171,7 @@ $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
 ## qemu
 Run win7
 ```
-qemu-system-x86_64 -accel kvm -M q35 -hda ./Win7_v1.img -m 4g -usb -device usb-tablet -smp 4
+qemu-system-x86_64 -accel kvm -machine q35 -device ahci,id=scsi0 -drive file=./Win7_v1.img,cache=unsafe,if=none,id=drive0 -device ide-hd,drive=drive0,bus=scsi0.0  -m 4g -usb -device usb-tablet -smp 4
 ```
 
 ## flatpak
