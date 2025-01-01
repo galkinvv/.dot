@@ -514,6 +514,20 @@ api-ms-win-eventing-provider-l1-1-0.dll
 ```cmd
 ::show stderr and stdout of a GUI app (still buffered)
 cmd /k GUIapp.exe 2>&1 | findstr .
+
+::ctrl-c handling for wrapper
+powershell.exe "$DelayinSeconds = Read-Host -Prompt 'Enter how manys seconds to sleep'; start-sleep -Seconds $DelayinSeconds" || CALL CALL
+IF ERRORLEVEL 1 (ECHO Cmd failed or interrupted & EXIT /B 1)
+ECHO Ok, continuing
+
+::detect laucnhig from explorer
+@IF /I "%COMSPEC% /c %~f0 " EQU "%cmdcmdline:"=%" (
+    :: script name with a trailing space present at the end of cmdcmdline - so script was executed by double click in explorer
+    ECHO.
+    powershell Write-Host -NoNewline -Back Red NOTE!
+    ECHO  %~nx0 is NOT intended to be run from GUI
+    PAUSE
+)
 ```
 
 ```powershell
