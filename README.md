@@ -266,6 +266,15 @@ def __unused(): "fake function to help writing header that allows executing same
 #install grub entirely on the efi partition
 grub-install --compress xz --boot-directory=/boot/efi --themes= --recheck --efi-directory=/boot/efi --removable
 grub-mkconfig -o /boot/efi/grub/grub.cfg
+
+if [ x$feature_timeout_style = xy ] ; then
+  set timeout_style=countdown
+  set timeout=4
+else
+  set timeout=1
+fi
+lspci
+play 480 440 1
 ```
 
 ## systemd
