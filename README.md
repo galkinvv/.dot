@@ -275,6 +275,22 @@ else
 fi
 lspci
 play 480 440 1
+
+
+setpci -d 10de: -v gpun SUBVENDOR_ID
+setpci -d 1002: -v gpua SUBVENDOR_ID
+
+if [ x$gpun != x ]; then
+        play 480 440 1 880 1 1760 1
+fi
+
+if [ x$gpua != x ]; then
+        play 480 440 1 880 1 440 1
+fi
+
+if [ x${gpua}${gpun} = x ]; then
+        play 480 440 1 220 2 110 2 55 1
+fi
 ```
 
 ## systemd
