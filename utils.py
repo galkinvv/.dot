@@ -1,4 +1,7 @@
-import sys
+import hashlib, pathlib, sys
+SELF_SCRIPT = pathlib.Path(__file__).absolute()
+SELF_ROOT = SELF_SCRIPT.parent
+
 class XorShift64PrngIter:
     MOD = 2 ** 64
     def __init__(self, initial_state = 1):
@@ -26,3 +29,18 @@ def main(cmdline=sys.argv):
 
     Args.dev = str(Args._next_arg("/dev/x"))
 
+def _update_hash_sum_with_fileobj(f, hashsum_updater):
+    while chunk := f.read(8192):
+        hashsum_updater(chunk)
+
+
+def _calc_file_hexdigest(path: pathlib.Path, hasher: hashlib._hashlib.HASH) -> str:
+    with path.open("rb") as reader:
+        _update_hash_sum_with_fileobj(reader, hasher.update)
+    return hasher.hexdigest()
+
+def get_self_blob_sha1():
+    git_like_file_sha1 = hashlib.sha1()
+    git_like_file_sha1.update(f"blob {SELF_SCRIPT.stat().st_size}\0".encode())
+    # initial prefix used by git. The resulting digest can be found via `git describe --always DIGEST`
+    return _calc_file_hexdigest(SELF_SCRIPT, git_like_file_sha1)
