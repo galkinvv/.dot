@@ -154,6 +154,11 @@ $ sudo mount.cifs //lurat-pc/RO RO -o user=vgalkin,uid=$(id -u),gid=$(id -u),fil
 nvidia-settings -c :0 -a "[gpu:0]/GPUFanControlState=1"
 nvidia-settings -c :0 -a "[fan:0]/GPUTargetFanSpeed=100"
 # exit x server, fan speed left ok
+
+# check local-installer drivers url
+distro=debian12
+version=570.124.06
+curl -I https://developer.download.nvidia.com/compute/nvidia-driver/$version/local_installers/nvidia-driver-local-repo-$distro-${version}_1.0-1_amd64.deb
 ```
 
 ## hdd
