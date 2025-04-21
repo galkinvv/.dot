@@ -193,6 +193,12 @@ docker run -id -v $(pwd):/data:ro --name new_cont_name image_id bash
 podman run -d         --name clonezilla         --hostname clonezilla         --restart unless-stopped         --memory 128M         --privileged=true         -e TERM=xterm         -e TZ=Europe/Berlin         -v /dev:/dev         -v clonezilla_data:/root         -v clonezilla_logs:/var/log         -v /home/partimag:/home/partimag:shared         docker.io/theniwo/clonezilla:latest
 podman exec -it clonezilla clonezilla
 ```
+## speaker
+```
+sudo modprobe snd_pcsp
+sudo aplay --device=plughw:CARD=pcsp 1.wav
+```
+
 ## pulseaudio
 ```
 #mixer, add to /etc/pulse/default.pa
