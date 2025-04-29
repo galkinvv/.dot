@@ -62,3 +62,48 @@ void *memset(void *ptr, int c, size_t size)
 	return ptr;
 }
 */
+
+
+#include <cstdint>
+#include <iostream>
+#include <linux/serial.h>
+
+struct SizeOffset {
+  std::string name;
+  uintptr_t size = {};
+  uintptr_t range = {};
+  uintptr_t offset = {};
+};
+
+
+template <class Structure, class Field>
+Structure get_containing_struct(Field Structure::* pointer_to_member);
+
+
+template <auto pointer_to_member>
+SizeOffset calc_size_offset()
+{
+  typedef decltype(get_containing_struct(pointer_to_member)) Structure;
+  alignas(Structure) char container_space[sizeof(Structure)] = {};
+  Structure* fake_structure = reinterpret_cast<Structure*>(container_space);
+  SizeOffset result = {};
+  result.name = __PRETTY_FUNCTION__;
+  result.size = sizeof(Structure);
+  result.offset = reinterpret_cast<uintptr_t>(&(fake_structure->*pointer_to_member))
+                  - reinterpret_cast<uintptr_t>(fake_structure);
+  result.range = sizeof(fake_structure->*pointer_to_member);
+  return result;
+}
+
+void print_size_offset(const SizeOffset& info)
+{
+  std::cout << info.name << " " << info.offset << "-" << (info.offset+info.range) << " of " << info.size << std::endl;
+}
+
+
+int main()
+{
+  print_size_offset(calc_size_offset<&serial_struct::iomem_base>());
+  print_size_offset(calc_size_offset<&serial_struct::iomap_base>());
+  return 0;
+}
