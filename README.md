@@ -428,6 +428,33 @@ char __license[] = "GPL";
 
 `lftp ftp://host.com/ -e 'find -l' > ftp-find-l.txt`
 
+### ipv6 announce as SLAAC to subnet on interface
+
+#### router
+
+/etc/radvd.conf
+```
+interface brsharefast {
+        AdvSendAdvert on;
+        MaxRtrAdvInterval 10;
+        prefix ::/64 {
+        };
+};
+```
+
+#### client
+
+/etc/systemd/network/alldhcp.network
+```
+[Match]
+Name=en*
+
+[Network]
+LinkLocalAddressing=ipv6
+DHCP=ipv4
+IPv6AcceptRA=1
+```
+
 ## pacman
 Partial upgrade with deps
 ```pacman -S --needed $(pactree -u mkinitcpio)```
