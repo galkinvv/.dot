@@ -172,6 +172,13 @@ hdparm -tT /dev/sdX
 # configure SAS drives for home use: Write cache on, backgroubd scan off
 $ sudo sdparm --set=WCE -S /dev/sdX
 $ sudo sdparm --set=EN_BMS=0 -S /dev/sdX
+
+# backup partition table
+$ sudo sfdisk --dump /dev/sdd > 1tb-raid1-sfdisk.dump.txt
+
+# restore partition table
+$ sudo wipefs -a /dev/sdX*
+$ sed 's/uuid=.*, //g' 1tb-raid1-sfdisk.dump.txt | sudo sfdisk /dev/sdX
 ```
 ## qemu
 Run win7

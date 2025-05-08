@@ -1,0 +1,11 @@
+label: gpt
+label-id: 9D50224A-1244-4A0A-8703-CE5F837F52DD
+device: /dev/sdd
+unit: sectors
+first-lba: 34
+last-lba: 1953525134
+sector-size: 512
+
+/dev/sdd1 : start=        2048, size=   390623232, type=A19D880F-05FC-4D3B-A006-743F0F84911E, uuid=6DD04B3B-309D-4EE4-883B-34FBE31DB195, name="hdd-raid-root"
+/dev/sdd2 : start=          64, size=        1984, type=21686148-6449-6E6F-744E-656564454649, uuid=032DCA6B-5807-49AE-B76E-665321C736F8, name="hdd-grub"
+/dev/sdd3 : start=   390625280, size=  1562898432, type=A19D880F-05FC-4D3B-A006-743F0F84911E, uuid=ACDFC4A4-A429-4200-8995-7C9AEF9737BE, name="hdd-raid-games"
