@@ -179,6 +179,9 @@ $ sudo sfdisk --dump /dev/sdd > 1tb-raid1-sfdisk.dump.txt
 # restore partition table
 $ sudo wipefs -a /dev/sdX*
 $ sed 's/uuid=.*, //g' 1tb-raid1-sfdisk.dump.txt | sudo sfdisk /dev/sdX
+
+# add new hdd to array
+$ sudo mdadm  /dev/md11 --add --write-mostly /dev/sdd3
 ```
 ## qemu
 Run win7
