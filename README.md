@@ -471,6 +471,9 @@ Partial upgrade with deps
 
 # Windows
 
+## FIx bloack desktop background
+delete `%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Themes\TranscodedWallpaper`
+
 ## .Net
 Add .exe.config file to run .net 2-3 app on net 4
 ```
