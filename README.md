@@ -183,6 +183,12 @@ $ sed 's/uuid=.*, //g' 1tb-raid1-sfdisk.dump.txt | sudo sfdisk /dev/sdX
 # add new hdd to array
 $ sudo mdadm  /dev/md11 --add --write-mostly /dev/sdd3
 ```
+## avx emulation
+```
+sde-external-9.58.0-2025-06-16-lin/sde64 -future -no-follow-child -- ./app app-args
+```
+
+
 ## qemu
 Run win7
 ```
