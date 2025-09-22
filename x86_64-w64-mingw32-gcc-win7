@@ -1,0 +1,8 @@
+#!/bin/bash
+for arg in "$@"; do
+    arg="${arg/#-lsynchronization/-lmsvcrt}";
+    arg="${arg/#rsbegin.o/${HOME}/.rustup/toolchains/1.89.0-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-pc-windows-gnu/lib/rsbegin.o}";
+    arg="${arg/#rsend.o/${HOME}/.rustup/toolchains/1.89.0-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-pc-windows-gnu/lib/rsend.o}";
+    processed_args+=("${arg}");
+done;
+exec x86_64-w64-mingw32-gcc "${processed_args[@]}"
