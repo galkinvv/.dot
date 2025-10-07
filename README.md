@@ -232,6 +232,11 @@ Match User firefly
 
 # automated ssh
 sshpass -p pass ssh user@host -p PORT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "cmd|piped cmd"
+
+# specify port in hostname
+Host *~*
+    Port 22
+    ProxyCommand bash -c "exec nc -q0 $(echo %h|tr '~' ' ')"
 ```
 ## admin
 ```
