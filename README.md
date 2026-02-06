@@ -199,6 +199,8 @@ qemu-system-x86_64 -accel kvm -machine q35 -device ahci,id=scsi0 -drive file=./W
 Access gvfs based locationd via portal: filesystem host + ~`org.gtk.vfs.*` - Talks in flatseal, maybe `--talk-name=org.gtk.vfs.*`~
 + filesystem `xdg-run/gvfs`
 
+`flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub/`
+
 ## docker
 ```
 # create container without command from image
