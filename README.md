@@ -67,6 +67,14 @@ ffmpeg -video_size 480x800 -framerate 30 -f x11grab -i :0.0 -pix_fmt yuv420p -th
 # optimize png screenshots
 S=filename; pngquant -Q 69-69 --nofs -vf --strip $S.png; advpng -z -4 -i 9 $S-or8.png; ls -l $S*; mv -vf $S-or8.png $S.png; ls -l
 ```
+## steam
+* install mesa-vulkan-drivers providing `/usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json` and `libVkLayer_MESA_device_select.so`
+* force specific gpu (have `NODEVICE_SELECT=1` outside of steam, but **unset** if for steam)
+```
+DRI_PRIME=pci-0000_04_00_0 MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE=1 %command%
+MESA_VK_DEVICE_SELECT=10de:1401 MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE=1 %command%
+MESA_VK_DEVICE_SELECT=10005:0 MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE=1 %command%
+```
 
 ## git
 ```sh
@@ -194,6 +202,8 @@ Run win7
 ```
 qemu-system-x86_64 -accel kvm -machine q35 -device ahci,id=scsi0 -drive file=./Win7_v1.img,cache=unsafe,if=none,id=drive0 -device ide-hd,drive=drive0,bus=scsi0.0  -m 4g -usb -device usb-tablet -smp 4
 ```
+## session isolation
+`exec env -i DISPLAY=$DISPLAY HOME=$HOME "PULSE_SERVER=$(pactl info|head -n1|cut -d: -f2)" $*`
 
 ## flatpak
 Access gvfs based locationd via portal: filesystem host + ~`org.gtk.vfs.*` - Talks in flatseal, maybe `--talk-name=org.gtk.vfs.*`~
