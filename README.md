@@ -500,6 +500,24 @@ IPv6AcceptRA=1
 Partial upgrade with deps
 ```pacman -S --needed $(pactree -u mkinitcpio)```
 
+## gdb
+attach without stop and then pause single thread
+```
+echo 'python
+import datetime
+gdb.set_convenience_variable("timestampallowstop", int(datetime.datetime.now().timestamp() + 10))
+gdb.set_convenience_variable("timestampcheck", int(datetime.datetime.now().timestamp()))
+end
+while $timestampcheck < $timestampallowstop
+ python import datetime; gdb.set_convenience_variable("timestampcheck", int(datetime.datetime.now().timestamp()))
+ continue -a
+end
+' > /tmp/gdb-cont              
+gdb -iex 'set pagination off' -iex 'set non-stop on' -p $(pidof proc_name) -x /tmp/gdb-cont
+# wait 15 seconds, press Ctrl+C twice
+# result only main thread is interrupted state `t` in htop
+```
+
 # Windows
 
 ## FIx bloack desktop background
