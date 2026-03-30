@@ -7,6 +7,16 @@ sudo env PATH="$PATH" py-spy top --nonblocking --pid $1
 ```
 ## perf
 ```sh
+#runnign perf inside docker with compose-added     cap_add:
+#    - CAP_SYS_ADMIN
+sudo sysctl kernel.perf_event_paranoid=-1 #host
+sudo sysctl kernel.kptr_restrict=0
+# record with perf on the host
+HOME=/Workspace/shared/with/container perf record -F 99 -p $(pidof containerproc) --call-graph lbr  -- static-sh -c 'sleep 100'
+# produce lamegraph with debian-based perf
+perf script report flamegraph -- --allow-download
+perf script -s perf-flamegraph-cpu-load.py -- --allow-download
+
 #Profiling single thread: step 1 outside docker, saving data in files and cache into .debug
 TID=12345
 PREFIX=main
