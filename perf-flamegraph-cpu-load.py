@@ -93,6 +93,12 @@ class FlameGraphCLI:
         node.children.append(child)
         return child
 
+    def name_for_entry(self, entry) -> str:
+        result = ""
+        if sym_off := entry.get("sym_off", 0):
+            result += str(sym_off) + "+"
+        return result + entry.get("sym", {}).get("name", hex(entry.get("ip", 0))) + entry.get("dso", "?")
+
     def process_event(self, event) -> None:
         # ignore events where the event name does not match
         # the one specified by the user
@@ -109,14 +115,15 @@ class FlameGraphCLI:
             comm = f"{event['comm']} ({pid})"
             libtype = ""
         node = self.find_or_create_node(self.stack, comm, libtype)
+        node = self.find_or_create_node(node, "Thread " + str(event.get("sample", {}).get("tid", "")), libtype)
 
         if "callchain" in event:
-            for entry in reversed(event["callchain"]):
-                name = entry.get("sym", {}).get("name", "[unknown]")
+           for entry in reversed(event["callchain"]):
+                name = self.name_for_entry(entry)
                 libtype = self.get_libtype_from_dso(entry.get("dso"))
                 node = self.find_or_create_node(node, name, libtype)
         else:
-            name = event.get("symbol", "[unknown]")
+            name = event.get("symbol", "[unknown]") + event.get("dso")
             libtype = self.get_libtype_from_dso(event.get("dso"))
             node = self.find_or_create_node(node, name, libtype)
         node.value += 1
