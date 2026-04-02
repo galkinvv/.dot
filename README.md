@@ -86,6 +86,12 @@ ffmpeg -video_size 480x800 -framerate 30 -f x11grab -i :0.0 -pix_fmt yuv420p -th
 # optimize png screenshots
 S=filename; pngquant -Q 69-69 --nofs -vf --strip $S.png; advpng -z -4 -i 9 $S-or8.png; ls -l $S*; mv -vf $S-or8.png $S.png; ls -l
 ```
+## multiseat
+```
+# awesome rc install lua-system and use it for setting not-use-wayland var in awesome session
+require("system").setenv("WAYLAND_DISPLAY", "FAKE_WD_VALUE_TO_MAKE_APPS_PREFER_X_DISPLAY")
+```
+
 ## steam
 * install mesa-vulkan-drivers providing `/usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json` and `libVkLayer_MESA_device_select.so`
 * force specific gpu (have `NODEVICE_SELECT=1` outside of steam, but **unset** if for steam)
