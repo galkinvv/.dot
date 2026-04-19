@@ -9,4 +9,10 @@ RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.
 RUN flatpak install --assumeyes --no-related runtime/org.gnome.Platform/x86_64/48 runtime/org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/24.08
 RUN flatpak install --assumeyes --no-related runtime/org.gnome.Sdk/x86_64/48 runtime/org.gnome.Sdk.Compat.i386/x86_64/48
 RUN flatpak install --assumeyes --no-related --no-deps app/org.winehq.Wine/x86_64/stable-24.08 runtime/org.winehq.Wine.gecko/x86_64/stable-24.08 runtime/org.winehq.Wine.mono/x86_64/stable-24.08
+RUN python3 <<EOF
+import pathlib, urllib.request
+dest = pathlib.Path("/usr/local/bin/flat-manager-client")
+urllib.request.urlretrieve("https://github.com/flatpak/flat-manager/releases/download/0.5.0/flat-manager-client.amd64", dest)
+dest.chmod(0o755)
+EOF
 # Usage gitlab-ci-local --privileged --mount-cache --variable im_flat_builder=im_flat_builder
