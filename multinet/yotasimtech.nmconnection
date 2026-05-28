@@ -1,0 +1,25 @@
+[connection]
+id=yotasimtech
+uuid=3b54e70b-a67b-4bcb-9ed6-12cd60ce1402
+type=gsm
+timestamp=1780003960
+
+[gsm]
+
+[ppp]
+
+[ipv4]
+ignore-auto-dns=true
+ignore-auto-routes=true
+method=auto
+route1=0.0.0.0/0,0.0.0.0,800
+route2=216.66.80.162/32,0.0.0.0,80
+route3=0.0.0.0/0,0.0.0.0,750
+route3_options=table=1
+routing-rule1=priority 5 from 109.188.87.16 table 1
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=disabled
+
+[proxy]

@@ -1,0 +1,27 @@
+[connection]
+id=ip6sit_con
+uuid=2b6b55a5-bd3b-49ab-b907-217a9f2fd997
+type=ip-tunnel
+autoconnect=false
+interface-name=ip6sit_if
+timestamp=1780004612
+
+[ip-tunnel]
+mode=3
+remote=216.66.80.162
+
+[ipv4]
+method=disabled
+
+[ipv6]
+addr-gen-mode=stable-privacy
+address1=2001:470:63ff::9:9/48
+dns=2001:4860:4860::8888;
+ignore-auto-dns=true
+ignore-auto-routes=true
+may-fail=false
+method=manual
+route1=::/0,2001:470:63ff::1,80
+routing-rule1=priority 5 from 2a00::/8 table 6
+
+[proxy]
