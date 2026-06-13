@@ -2,7 +2,8 @@
 #view logs via `sudo journalctl --follow --identifier=nm-dispatcher`
 IP=1.1.8.1
 DEPENDENT=some_con
-if ip -o -4 addr show | grep -qw "$IP"; then
+set | grep 'NM\|CONNECTION'
+if nmcli -t -f active c show $CONNECTION_ID | grep -qw "$IP"; then
     echo "IP $IP is present"
     if [[ -z "`nmcli -t -f active c show $DEPENDENT`" ]]; then
         echo "Connection $DEPENDENT is not active, activating"
