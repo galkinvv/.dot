@@ -561,8 +561,18 @@ mkdir '\$EFI_NTFS_DRIVER_FIX_FOLDER3WITH_LONGEST_POSSIBLE_NAME111111111111111111
 mkdir '\$EFI_NTFS_DRIVER_FIX_FOLDER4WITH_LONGEST_POSSIBLE_NAME1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
 mkdir '\$EFI_NTFS_DRIVER_FIX_FOLDER5WITH_LONGEST_POSSIBLE_NAME1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
 ```
+### boot from C:
+```
+bcdboot C:\Windows\ /s c: /f UEFI
+bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {bootmgr} displaybootmenu yes
+bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {bootmgr} timeout 2
+- delete from linux => non bootable
+- recreate from linux without specifying flags => bootable, visible from windows
+- delete from Windows => bootable
+bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {default} recoveryenabled no
+```
 
-Fix black desktop background
+## Fix black desktop background
 delete `%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Themes\TranscodedWallpaper`
 
 ## .Net
