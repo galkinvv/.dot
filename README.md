@@ -545,7 +545,15 @@ gdb -iex 'set pagination off' -iex 'set non-stop on' -p $(pidof proc_name) -x /t
 
 # Windows
 
-## FIx bloack desktop background
+## Windows bootloader
+
+### Removing reserved 16MB partition
+
+- delete from linux => non bootable
+- recreate from linux => bootable
+- delete from Windows => bootable
+
+## Fix black desktop background
 delete `%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Themes\TranscodedWallpaper`
 
 ## .Net
