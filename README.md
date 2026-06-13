@@ -566,11 +566,20 @@ mkdir '\$EFI_NTFS_DRIVER_FIX_FOLDER5WITH_LONGEST_POSSIBLE_NAME111111111111111111
 bcdboot C:\Windows\ /s c: /f UEFI
 bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {bootmgr} displaybootmenu yes
 bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {bootmgr} timeout 2
+bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {default} recoveryenabled no
 - delete from linux => non bootable
 - recreate from linux without specifying flags => bootable, visible from windows
 - delete from Windows => bootable
-bcdedit /store C:\EFI\Microsoft\Boot\BCD /set {default} recoveryenabled no
+- move to left via gparted
+- online expand from windows
 ```
+### autologin
+
+- make some settings (already made by Filibustier) to activate checkbox
+- netplwiz
+- disable checkbox
+- press ok
+- enter password
 
 ## Fix black desktop background
 delete `%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Themes\TranscodedWallpaper`
