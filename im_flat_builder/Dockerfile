@@ -42,3 +42,4 @@ RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.
 RUN flatpak install --assumeyes --no-related flathub runtime/org.gnome.Platform/x86_64/48 \
     runtime/org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/24.08 runtime/org.gnome.Sdk/x86_64/48 runtime/org.gnome.Sdk.Compat.i386/x86_64/48
 RUN flatpak install --assumeyes --no-related --no-deps app/org.winehq.Wine/x86_64/stable-24.08
+RUN flatpak install --assumeyes --no-related --no-deps runtime/org.winehq.Wine.mono/x86_64/stable-24.08 runtime/org.winehq.Wine.gecko/x86_64/stable-24.08
