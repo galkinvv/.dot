@@ -1,6 +1,6 @@
 # syntax=docker.io/docker/dockerfile:1
 # docker image for building flatpaks via gitlab-ci-local --privileged
-FROM docker.io/ubuntu:resolute-20260421
+FROM docker.io/ubuntu:resolute-20260610
 RUN cat >/etc/apt/sources.list.d/ubuntu.sources <<EOF
 # frozen resolute without any updates. Its docker build environment for running build inside flatpak container, no its files are exported in build result, so prefer stability to security updates
 Types: deb
