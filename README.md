@@ -193,6 +193,7 @@ distro=debian12
 version=570.124.06
 curl -I https://developer.download.nvidia.com/compute/nvidia-driver/$version/local_installers/nvidia-driver-local-repo-$distro-${version}_1.0-1_amd64.deb
 ```
+`__RM_NO_VERSION_CHECK=1` skip kernel-level API version check. Checked for wyaland and console + 580.94.18 client running on kernel module 580.159.03. X11 not working.
 
 ## hdd
 ```
