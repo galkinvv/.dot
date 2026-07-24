@@ -38,8 +38,7 @@ retrieve_file(flatpak_deb_repo_url + "flatpak" + flatpak_version, flatpak_deb_de
 subprocess.call(["apt", "install", "-y", "--no-install-recommends", "--allow-downgrades", flatpak_deb_dest, "flatpak-builder"])
 EOF
 
-RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-RUN flatpak install --assumeyes --no-related flathub runtime/org.gnome.Platform/x86_64/48 \
+RUN flatpak remote-add --if-not-exists deps-repo https://flathub.org/repo/flathub.flatpakrepo
+RUN flatpak install --assumeyes --no-related deps-repo runtime/org.gnome.Platform/x86_64/48 \
     runtime/org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/24.08 runtime/org.gnome.Sdk/x86_64/48 runtime/org.gnome.Sdk.Compat.i386/x86_64/48
-RUN flatpak install --assumeyes --no-related --no-deps app/org.winehq.Wine/x86_64/stable-24.08
-RUN flatpak install --assumeyes --no-related --no-deps runtime/org.winehq.Wine.mono/x86_64/stable-24.08 runtime/org.winehq.Wine.gecko/x86_64/stable-24.08
+RUN flatpak install --assumeyes --no-related --no-deps deps-repo app/org.winehq.Wine/x86_64/stable-24.08 runtime/org.winehq.Wine.mono/x86_64/stable-24.08 runtime/org.winehq.Wine.gecko/x86_64/stable-24.08
