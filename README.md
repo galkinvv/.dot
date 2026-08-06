@@ -101,6 +101,13 @@ MESA_VK_DEVICE_SELECT=10de:1401 MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE=1 %co
 MESA_VK_DEVICE_SELECT=10005:0 MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE=1 %command%
 ```
 
+Interactive/modded launchers
+```
+xterm -fc 5 -e bash -c "echo %command%; bash"
+xterm -fc 5 -e bash -c "PATH=$PATH:/usr/games gamescope --adaptive-sync --immediate-flips -f --force-windows-fullscreen -W 3840 -H 2160 -- %command%;bash"
+PATH=$PATH:/usr/games gamescope --adaptive-sync --immediate-flips -f --force-windows-fullscreen -W 3840 -H 2160 -- %command%
+```
+
 ## git
 ```sh
 # download HEAD subfolder via ssh (gitlab)
