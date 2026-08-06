@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<!-- xterm -fc 5 -e pw-jack carla -n adjust.carxp -->
+<CARLA-PROJECT VERSION='2.6'>
+ <EngineSettings>
+  <ForceStereo>false</ForceStereo>
+ </EngineSettings>
+
+ <!-- Spectral Shift -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>Spectral Shift</Name>
+   <URI>http://github.com/trencrumb/SpectralShift</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <Volume>1.27</Volume>
+   <Options>0x1</Options>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#String</Type>
+    <Key>http://github.com/trencrumb/SpectralShift:StateString</Key>
+    <Value>
+515.VMjLgne....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOPElbg0VYzUlby4COPEjTA0DHoQVOhXzSR0TPNQ0WBEzTE8ERZIBH1EFa0UVOh.iKvHxK9vCTAIUPMARZj0iHF8jTMEjST80PE4DUSIBH1EFa0UVOh.iKvHxK9vCTAIUPMARZj0iHF8jTMEjST80PO0DTE4zTAQURO4jHfXWXrUWY8HRLt.iHu3COPEjTA0DHoQVOhXzSR0TPNQ0WSUTSIQ0SNUzTh.hcgwVck0iHsLiKyXCLv.CL1DCLyTSL0XiLh7hO7.UPRETSfjFY8HBTIQ0PH80PE4DUSIBH1EFa0UVOh.iKvHxK9vCTAIUPMARZj0iHPkDUCgzWSUTSIQ0SNUzTh.hcgwVck0iHsDSLt.yL4jSN4jiMwfSMy.yLh7hO7.UPRETSfjFY8HBUIwDUeMTQNQkTE8UPUQ0Sh.hcgwVck0iHv3BLh7hO7.UPRETSfjFY8HBUIwDUeMTQNQkTE8ERZIBH1EFa0UVOhDCLy.CLt.iHu3COPEjTA0DHoQVOhPURLQ0WGETRN8EQBIBH1EFa0UVOhXiKvHxK9vCTAIUPMARZj0iHT8jSAwTRTk0WHokHfXWXrUWY8HRLz.iMv3BLh7hO77BTgIWXsUFckI2b9..
+    </Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <ExternalPatchbay>
+  <Connection>
+   <Source>Webcam C310 Mono:capture_MONO</Source>
+   <Target>Carla:audio-in1</Target>
+  </Connection>
+  <Connection>
+   <Source>Carla:audio-out1</Source>
+   <Target>SinkForAdjusterAppLikeCarla:playback_MONO</Target>
+  </Connection>
+ </ExternalPatchbay>
+</CARLA-PROJECT>
